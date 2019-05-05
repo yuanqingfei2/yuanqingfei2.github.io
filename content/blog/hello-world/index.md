@@ -1,7 +1,7 @@
 ---
 title: Hello World
 date: "2015-05-01T22:12:03.284Z"
-description: "try to explain why new blog"
+description: "解释了下之前blog的构建以及现在的构建。说明为什么又另起炉灶。"
 ---
 两年前(2017)搞了一个， 也就是[为艺术而技术](http://yuaniqngfei.me),采用的当时流行的[Jkeyll](https://jekyllrb.com/)，它是基于[Ruby](https://www.ruby-lang.org/en/)语言的。但是它有个很诱人的特点就是可以很方便的**免费**使用[Github Pages](https://pages.github.com/)来做静态网站。步骤如下：
 
