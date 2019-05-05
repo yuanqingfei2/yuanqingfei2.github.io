@@ -3,7 +3,7 @@ title: Hello World
 date: "2015-05-01T22:12:03.284Z"
 description: "try to explain why new blog"
 ---
-两年前搞了一个， 也就是[为艺术而技术]（http://yuaniqngfei.me）,采用的当时流行的[Jkeyll](https://jekyllrb.com/)，它是基于[Ruby](https://www.ruby-lang.org/en/)语言的。但是它有个很诱人的特点就是可以很方便的**免费**使用[Github Pages](https://pages.github.com/)来做静态网站。步骤如下：
+两年前(2017)搞了一个， 也就是[为艺术而技术](http://yuaniqngfei.me),采用的当时流行的[Jkeyll](https://jekyllrb.com/)，它是基于[Ruby](https://www.ruby-lang.org/en/)语言的。但是它有个很诱人的特点就是可以很方便的**免费**使用[Github Pages](https://pages.github.com/)来做静态网站。步骤如下：
 
 * 选择一个theme，[Jekyllthemes](http://jekyllthemes.org/)里有很多，我采用的是[Minimal Mistakes](https://mademistakes.com/work/minimal-mistakes-jekyll-theme/)。
 
@@ -14,11 +14,12 @@ description: "try to explain why new blog"
 * 当时的github pages还没有支持SSL，所以中间又转了一层，加了[Cloudflare](https://www.cloudflare.com/)，这里有[教程](https://www.codementor.io/landonpatmore/how-to-setup-a-static-website-using-github-pages-and-cloudflare-with-your-own-domain-name-jb99nbuoe)
 
 简单来说： Github Pages + Cloudflare/Godaddy + Jkeyll
+
 -----------
 
 上面网站我写了一些文章后发现，质量偏低，主要都是生活方面的。 还是想打算找个地方专门写技术文章。所以转到这里[青梅嗅](htts://yuanqingfei.com)
 
-这次采用的平台是[Gatsby]。
+这次采用的平台是[Gatsby](https://www.gatsbyjs.org)。本来还是享用Github Pages来做，结果不支持，也就是说你必须每次手动把生成的东西放上去。还好[Netlify](https://www.netlify.com/)支持，也就是自动发现Github Repo的更新并发布。另外还有个bonus：SSL，不用再麻烦Cloudflare，其实现在的Github Pages也已经支持SSL了，只是Cloudflare还可以看访客数量信息，所以之前的网站就不变了。
 
 简单来说: Netlify + Godaddy + Gatsby
 
@@ -31,5 +32,4 @@ def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     case Cons(x, xs) => f(x, foldRight(xs, z)(f))
 ```
 
-![Chinese Salty Egg](./salty_egg.jpg)
-
+貌似现在还不支持上面的Scala语言
