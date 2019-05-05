@@ -50,4 +50,10 @@ class Test{
 }
 ```
 
-貌似现在还不支持上面的Scala语言
+默认[starter blog](https://github.com/gatsbyjs/gatsby-starter-blog) 不支持上面的语言高亮显示，根据这篇[文章](https://reactgo.com/gatsbyblog/syntaxhighlighting/)需要在 gatsby-browser.js 里面加上下面这行：
+
+```javascript
+// for code highlight
+require("prismjs/themes/prism-solarizedlight.css")
+```
+
