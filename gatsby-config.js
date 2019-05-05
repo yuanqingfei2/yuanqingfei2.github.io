@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: "/yuanqingfei.com",
+  pathPrefix: "/yuanqingfei2.github.io",
   siteMetadata: {
     title: `青梅嗅`,
     author: `Qingfei Yuan`,
