@@ -32,4 +32,22 @@ def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     case Cons(x, xs) => f(x, foldRight(xs, z)(f))
 ```
 
+```javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+```
+
+```python
+s = "Python syntax highlighting"
+print s
+```
+
+```java
+class Test{
+  public static void main(String args[]){
+    System.out.println("test");
+  }
+}
+```
+
 貌似现在还不支持上面的Scala语言
