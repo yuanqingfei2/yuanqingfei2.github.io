@@ -44,17 +44,37 @@ L[A] >: L[-B]      // contravariant
 
 ## Producer Extends, Consumer Super （PECS）
 
-producer 代表只读，extends代表协变，consumer代表可写，super代表逆协变。
+先说结论:  
+producer === extends === read only === covariant  
+consumer ==== super ==== write only === contravariant
 
 从Java集合的角度, 从集合中取数据就是producer，你就要用extends；向里面存就是consumer，需要使用super。
-
-从Scala的角度，参数就是Consumer，所以应该是逆协变，而返回值就是Producer，所以就是协变。这样理解下面的Signature就容易了。
-```scala
-traint Function1[-T, +R]
+```java
+List<? extends Vehicle> garage = new ArrayList<>();
+garage.add(new Vehicle());  // compilation error
+garage.add(new Car());      // compilation error
+garage.add(new Bus());      // compilation error
+// reading behavior
+Vehicle vehicle = garageB.get(1);
 ```
+上面这个例子用的是extends，所以只读，不可写。为什么呢，很简单，因为编译器不知道你到底是哪个子类型，所以不让写。但是你读出来的肯定是Vehicle的子类，所以完全没问题。
 
-## 例子
+```java
+List<? super Car> garage = new ArrayList<>();
+garage.add(new BMW());
+garage.add(new Alto());
+garage.add(new Vehicle());    // compilation error
+// reading behavior
+Object object = garage.get(0);    // I don't get a Car, why?
+```
+同样，上面的例子可以写入，但是由于不知道具体类型，所以只能给出最高级类型也就是Object。
 
+从Scala的角度，参数就是Consumer，所以应该是逆协变，而返回值就是Producer，所以就是协变。这样理解下面的[Signature](https://www.scala-lang.org/api/2.9.2/scala/Function1.html)就容易了。
+```scala
+trait Function1[-T, +R] extends AnyRef
+trait Function2[-T1, -T2, +R] extends AnyRef
+```
+Scala支持高阶函数，因此函数本身也就有了范型。
 ```scala
 abstract class Animal {
   def name: String
@@ -72,6 +92,6 @@ https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc
 
 https://docs.scala-lang.org/tour/variances.html 
 
-https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super
+https://medium.com/@isuru89/java-producer-extends-consumer-super-9fbb0e7dd268
 
 
