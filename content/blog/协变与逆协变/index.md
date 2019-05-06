@@ -1,3 +1,9 @@
+---
+title: 协变与逆协变
+date: "2019-05-06T13:22:00.000Z"
+description: "范型中常见的两个概念解析以及在Java和Scala中的应用"
+---
+
 假定A <: B (A是B的子类)，如果T[A] <: T[B]，那么我们就说T是协变的(**covariant**)。如果T[B] <: T[A]，那么我们说T是逆协变的(**contravariant**)。如果T[B]和T[A]没有从属关系，我们就说T是非协变的(**invariant**)。
 
  1. Java
@@ -69,8 +75,8 @@ case class Mouse(name: String) extends SmallAnimal
 
 4. 致谢
 -------
-[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc
-[2]: https://docs.scala-lang.org/tour/variances.html
-[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super
+[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc 
+[2]: https://docs.scala-lang.org/tour/variances.html 
+[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super 
 
 
