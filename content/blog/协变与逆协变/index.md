@@ -26,7 +26,6 @@ testObj = arrayA[0];
 `public void process(List<? super Car> list) { ... }`
 这个参数就是逆协变了。　
 
-
 2. Scala
 ---------
 
