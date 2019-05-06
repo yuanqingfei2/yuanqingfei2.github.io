@@ -32,21 +32,6 @@ public class RapidFacItemWriterTest {
 	@MockBean
 	private MongoOperations mockProvider;
 	
-	@MockBean
-	private Date feedDate;
-	
-	@MockBean
-	private ExecutionContextDao executionContextDao;
-
-	@MockBean
-	private JobExecutionDao jobExecutionDao;
-
-	@MockBean
-	private JobInstanceDao jobInstanceDao;
-
-	@MockBean
-	private StepExecutionDao stepExecutionDao;
-	
 	@Autowired
 	private RapidFacItemWriter rapidWriter;
 	
@@ -69,7 +54,7 @@ public class RapidFacItemWriterTest {
 
 6. 问题来了，如果你要测试的bean使用了@PostConstruct该怎么办
 ------------------
-我们知道@postConstruct的方法在Springcontext中是加载完构造体就要执行的，如果这个方法里面的依赖需要mock怎么办，你可能会说，使用@Before阿，可是并没有用，因为@before执行代码在@PostConstruct之后。 方法是基于原有的springcontext创建测试context，在测试bean里mock出想要的行为。上代码！
+我们知道@PostConstruct的方法在Springcontext中是加载完构造体就要执行的，如果这个方法里面的依赖需要mock怎么办，你可能会说，使用@Before阿，可是并没有用，因为@before执行代码在@PostConstruct之后。 方法是基于原有的springcontext创建测试context，在所依赖的bean里mock出想要的行为。如果你的名字不同（下面例子中的altIdDao），就要使用@Primary来区分。如果名字相同，会自动override。
 
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -111,7 +96,5 @@ public class CurveResolutionOrganizationTest {
 7. 致谢
 --------
 https://www.baeldung.com/spring-boot-testing
-
 https://www.baeldung.com/java-spring-mockito-mock-mockbean
-
 https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1
