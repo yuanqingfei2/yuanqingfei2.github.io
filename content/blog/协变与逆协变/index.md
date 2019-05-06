@@ -9,7 +9,7 @@ description: "范型中常见的两个概念解析以及在Java和Scala中的应
  1. Java
  --------
  
-## Java中数组是协变的，意味着下面的代码没有问题，但是你需要自己清楚实际数组放的是什么类型。否则运行时可能要出问题。
+* Java中数组是协变的，意味着下面的代码没有问题，但是你需要自己清楚实际数组放的是什么类型。否则运行时可能要出问题。
 
  ```java
 Object testObj = null;
@@ -18,9 +18,9 @@ String[] arrayB = { "a", "b", "c" };
 Object[] arrayA = arrayB;
 testObj = arrayA[0];
 ```
-## Java中的Generic是Java5引入的，默认是invariant的。 MyClass<String>不是MyClass<Object>的子类或者父类。  
+* Java中的Generic是Java5引入的，默认是invariant的。 MyClass<String>不是MyClass<Object>的子类或者父类。  
     
-## Java使用use-site方式来实现协变或者逆协变。也就是在使用的时候才知道。这依赖于Java5中引入的[wildcard](https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html)。
+* Java使用use-site方式来实现协变或者逆协变。也就是在使用的时候才知道。这依赖于Java5中引入的[wildcard](https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html)。
 
 `public void process(List<? extends Car> list) { ... }`
 也就是说这个List参数变成协变的了，因为它接受所有Car以及Car子类的List。 与之相对，
@@ -31,14 +31,14 @@ testObj = arrayA[0];
 2. Scala
 ---------
 
-## Scala可以使用和Java同样的use-site方式来实现协变或逆协变。
+* Scala可以使用和Java同样的use-site方式来实现协变或逆协变。
 ```scala
 A :< B
 L[A] :< L[_ <: B]   // covariant
 L[A] :> L[_ >: B]   // contravariant
 ```
 
-## Scala还可以使用delcare-site方式来实现。
+* Scala还可以使用delcare-site方式来实现。
 ```scala
 A :< B
 L[A] :< L[+B]      // covariant
@@ -70,8 +70,8 @@ case class Mouse(name: String) extends SmallAnimal
 
 4. 致谢
 -------
-[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc
-[2]: https://docs.scala-lang.org/tour/variances.html
-[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super
+[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc 
+[2]: https://docs.scala-lang.org/tour/variances.html 
+[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super 
 
 
