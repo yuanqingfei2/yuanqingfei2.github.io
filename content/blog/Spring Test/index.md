@@ -6,7 +6,7 @@ description: "Spring Test 中常用的几个Annotation以及如何应对@PostCon
 
 Spring有[spring-test](https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html), 加之[Mockito](https://site.mockito.org/)和[Junit](https://junit.org/junit4/)，使得Test变得容易。
 
-1. @RunWith(SpringJUnit4ClassRunner.class) 和 @@ContextConfiguration(locations = {...})
+1. @RunWith(SpringJUnit4ClassRunner.class) 和 @ContextConfiguration(locations = {...})
 ------------
 使用这个组合来加载springcontext并进行测试。如果你使用的是spring-boot，可以使用 @RunWith(SpringRunner.class)和@SpringBootTest(SpringBootTest.WebEnvironment.None, classes = XXX.class)。 效果是一样的。
 
@@ -110,6 +110,8 @@ public class CurveResolutionOrganizationTest {
 
 7. 致谢
 --------
-* https://www.baeldung.com/spring-boot-testing
-* https://www.baeldung.com/java-spring-mockito-mock-mockbean
-* https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1
+https://www.baeldung.com/spring-boot-testing
+
+https://www.baeldung.com/java-spring-mockito-mock-mockbean
+
+https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1
