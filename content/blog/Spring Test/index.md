@@ -45,7 +45,6 @@ L[A] >: L[-B]      // contravariant
 ```
 
 ## Producer Extends, Consumer Super （PECS）
-----------------
 
 producer 代表只读，extends代表协变，consumer代表可写，super代表逆协变。
 
@@ -68,8 +67,7 @@ case class Mouse(name: String) extends SmallAnimal
 ```
 基于上面的解释，Animal是Cat的父类，而Mouse是SmallAnimal的子类，因此我们可以说 **Animal => Mouse** 是 **Cat => SmallAnimal** 的子类型。
 
-4. 致谢
--------
+4. 致谢 
 [1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc  
 [2]: https://docs.scala-lang.org/tour/variances.html   
 [3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super   
