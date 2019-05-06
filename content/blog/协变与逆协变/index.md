@@ -12,11 +12,11 @@ description: "范型中常见的两个概念解析以及在Java和Scala中的应
     * Java中数组是协变的，意味着下面的代码没有问题，但是你需要自己清楚实际数组放的是什么类型。否则运行时可能要出问题。
  ```java
 Object testObj = null;
-
 String[] arrayB = { "a", "b", "c" };
 Object[] arrayA = arrayB;
 testObj = arrayA[0];
 ```
+
     * Java中的Generic是Java5引入的，默认是invariant的。 MyClass<String>不是MyClass<Object>的子类或者父类。  
     
     * Java使用use-site方式来实现协变或者逆协变。也就是在使用的时候才知道。这依赖于Java5中引入的[wildcard](https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html)。
