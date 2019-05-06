@@ -95,6 +95,6 @@ public class CurveResolutionOrganizationTest {
 
 7. 致谢
 --------
-[1]: https://www.baeldung.com/spring-boot-testing  
-[2]: https://www.baeldung.com/java-spring-mockito-mock-mockbean 
-[3]: https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1 
+[1]: https://www.baeldung.com/spring-boot-testing   
+[2]: https://www.baeldung.com/java-spring-mockito-mock-mockbean  
+[3]: https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1  
