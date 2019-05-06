@@ -10,7 +10,6 @@ description: "范型中常见的两个概念解析以及在Java和Scala中的应
  --------
  
     * Java中数组是协变的，意味着下面的代码没有问题，但是你需要自己清楚实际数组放的是什么类型。否则运行时可能要出问题。
-
  ```java
 Object testObj = null;
 
@@ -70,8 +69,8 @@ case class Mouse(name: String) extends SmallAnimal
 
 4. 致谢
 -------
-[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc 
-[2]: https://docs.scala-lang.org/tour/variances.html 
-[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super 
+[1]: https://medium.com/@sinisalouc/variance-in-java-and-scala-63af925d21dc  
+[2]: https://docs.scala-lang.org/tour/variances.html   
+[3]：https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super   
 
 
