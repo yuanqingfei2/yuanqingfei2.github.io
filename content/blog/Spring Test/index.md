@@ -32,19 +32,6 @@ public class RapidFacItemWriterTest {
 	@MockBean
 	private MongoOperations mockProvider;
 	
-	@MockBean
-	private Date feedDate;
-	
-	@MockBean
-	private ExecutionContextDao executionContextDao;
-
-	@MockBean
-	private JobExecutionDao jobExecutionDao;
-
-	@MockBean
-	private JobInstanceDao jobInstanceDao;
-
-	@MockBean
 	private StepExecutionDao stepExecutionDao;
 	
 	@Autowired

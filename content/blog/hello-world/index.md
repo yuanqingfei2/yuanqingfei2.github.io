@@ -75,4 +75,10 @@ require("prismjs/themes/prism-solarizedlight.css")
     },
 ```
 
-未完待续
+## 致谢
+
+https://daveceddia.com/start-blog-gatsby-netlify/
+
+https://daveceddia.com/how-to-blog/
+
+
