@@ -37,7 +37,7 @@ class Layout extends React.Component {
             fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
           }}
-        >
+        >        
           <Link
             style={{
               boxShadow: `none`,
@@ -47,7 +47,7 @@ class Layout extends React.Component {
             to={`/`}
           >
             {title}
-          </Link>
+          </Link>          
         </h3>
       )
     }
@@ -65,7 +65,7 @@ class Layout extends React.Component {
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <a href="https://www.gatsbyjs.org">Gatsby</a>         
         </footer>
       </div>
     )
