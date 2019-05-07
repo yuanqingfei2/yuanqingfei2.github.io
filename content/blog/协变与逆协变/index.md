@@ -15,16 +15,24 @@ String[] arrayB = { "a", "b", "c" };
 Object[] arrayA = arrayB;
 testObj = arrayA[0];
 ```
- Java中的Generic是Java5引入的，默认是invariant的。 `MyClass<String>`不是`MyClass<Object>`的子类或者父类。     
- Java使用use-site方式来实现协变或者逆协变。也就是在使用的时候才知道。这依赖于Java5中引入的[wildcard](https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html)。
+
+Java中的Generic是Java5引入的，默认是invariant的。 `MyClass<String>`不是`MyClass<Object>`的子类或者父类。同样原因，下面的代码会有编译错误。 
+```java
+List<Car> cars = new ArrayList<>();
+List<Vehicle> garage = cars;        // compilation error
+```
+
+Java使用use-site方式来实现协变或者逆协变。也就是在使用的时候才知道。这依赖于Java5中引入的[wildcard](https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html)。
 ```java
 public void process(List<? extends Car> list) { ... }
 ```
-也就是说这个List参数变成协变的了，因为它接受所有Car以及Car子类的List。 与之相对，
+也就是说这个List参数变成协变的了，因为它接受所有Car以及Car子类的List。 
+
+与之相对，
 ```java
 public void process(List<? super Car> list) { ... }
 ```
-这个参数就是逆协变了。　
+这个参数就是逆协变了。
 
 ## Scala
 
@@ -74,6 +82,7 @@ Object object = garage.get(0);    // I don't get a Car, why?
 trait Function1[-T, +R] extends AnyRef
 trait Function2[-T1, -T2, +R] extends AnyRef
 ```
+
 Scala支持高阶函数，因此函数本身也就有了范型。
 ```scala
 abstract class Animal {
