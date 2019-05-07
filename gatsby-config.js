@@ -3,7 +3,7 @@ module.exports = {
   siteMetadata: {
     title: `青梅嗅`,
     author: `Qingfei Yuan`,
-    description: `Experience Sharing`,
+    description: `青梅嗅`,
     siteUrl: `https://yuanqingfei.com`,
     social: {
       twitter: `yuanqingfei`,
