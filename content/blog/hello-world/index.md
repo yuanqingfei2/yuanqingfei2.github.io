@@ -57,11 +57,12 @@ class Test{
 默认[starter blog](https://github.com/gatsbyjs/gatsby-starter-blog) 不支持上面的语言高亮显示，根据这篇[文章](https://reactgo.com/gatsbyblog/syntaxhighlighting/)需要在 gatsby-browser.js 里面加上下面这行：
 
 ```javascript
-// for code highlight
 require("prismjs/themes/prism-solarizedlight.css")
 ```
 
 ## 加上google Analysitics
+
+使用[gatsby-plugin-google-analytics](https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/)。
 
 在gatsby-config.js 加上下面：
 
@@ -69,7 +70,6 @@ require("prismjs/themes/prism-solarizedlight.css")
 {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: "UA-XXXXXXXXX-X",
       },
     },
@@ -85,7 +85,7 @@ yarn add disqus-react
 ```
 或者
 ```bash
-npm install disqus-react
+npm install disqus-react --save
 ```
 
 * 修改src/templates/blog-posts.js
@@ -108,6 +108,18 @@ import { DiscussionEmbed } from "disqus-react";
 ## 增加adsense
 
 采用[gatsby-plugin-google-adsense](https://www.npmjs.com/package/gatsby-plugin-google-adsense)
+
+```javascript
+// In your gatsby-config.js file
+plugins: [
+    {
+      resolve: `gatsby-plugin-google-adsense`,
+      options: {
+        publisherId: `ca-pub-xxxxxxxxxx`
+      },
+    },
+]
+```
 
 ## 致谢
 
