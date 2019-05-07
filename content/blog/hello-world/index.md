@@ -105,6 +105,9 @@ import { DiscussionEmbed } from "disqus-react";
     <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
 ```
 
+## 增加adsense
+
+采用[gatsby-plugin-google-adsense](https://www.npmjs.com/package/gatsby-plugin-google-adsense)
 
 ## 致谢
 
