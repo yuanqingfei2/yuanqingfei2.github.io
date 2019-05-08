@@ -15,7 +15,7 @@ description: "解释了下之前blog的构建以及现在的构建。说明为�
 
 *  ~~当时的github pages还没有支持SSL，所以中间又转了一层，加了[Cloudflare](https://www.cloudflare.com/)，这里有[教程](https://www.codementor.io/landonpatmore/how-to-setup-a-static-website-using-github-pages-and-cloudflare-with-your-own-domain-name-jb99nbuoe)~~
 
-简单来说： Github Pages + ~~Cloudflare/~~Godaddy + Jkeyll
+简单来说： Github Pages + ~~Cloudflare/~~ Godaddy + Jkeyll
 
 ## 目前动机
 
