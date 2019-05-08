@@ -31,9 +31,7 @@ public class RapidFacItemWriterTest {
 
 	@MockBean
 	private MongoOperations mockProvider;
-	
-	private StepExecutionDao stepExecutionDao;
-	
+		
 	@Autowired
 	private RapidFacItemWriter rapidWriter;
 	
@@ -94,6 +92,94 @@ public class CurveResolutionOrganizationTest {
        }
 }
 
+##　如何测试StepScope的bean呢
+
+```java
+	@Bean
+	@StepScope
+	public ItemWriter<DirectParents> itemWriter(@Value("#{jobParameters[cobDate]}") Date cobDate) {
+		DirectParentsWriter writer = new DirectParentsWriter();
+		writer.setCobDate(cobDate);
+		return writer;
+	}
+```
+如果想测试上面的Writer，根据[spring-test](https://docs.spring.io/spring-batch/trunk/reference/html/testing.html#testingIndividualSteps), 你需要@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, StepScopeTestExecutionListener.class})，可是如果这样的话，你原来的@MockBean反而不工作了，解决办法就是显式引入Mockito的Listener。如下所示
+
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = DirectParentTestConfig.class)
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, StepScopeTestExecutionListener.class, MockitoTestExecutionListener.class})
+public class DirectParentsWriterTest {
+	
+	
+	@MockBean
+	private MongoOperations mongo;
+	
+	@Autowired
+	private ItemWriter<DirectParents> writer;
+	
+	@Test
+	public void testWriter() {
+		assertNotNull(writer);
+		assertNotNull(mongo);
+		
+		List<DirectParents> items = new ArrayList<>();
+		DirectParents dp = new DirectParents();
+		dp.setGfcId("gfcId");
+		dp.setDirectParentGfcId("parentGfcId");
+		items.add(dp);
+		try {
+			writer.write(items);
+			verify(mongo, times(1)).insertAll(any(Collection.class));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	public StepExecution getStepExecution() {
+		JobParameter datePara = new JobParameter(new Date());
+		
+//		StepExecution execution = MetaDataInstanceFactory.createStepExecution();
+		
+		 // doesn't work
+//		execution.getJobParameters().getParameters().put("cobDate", datePara);
+		// doesn't work
+//		execution.getJobExecution().getJobParameters().getParameters().put("cobDate", datePara);  
+		
+		Map<String,JobParameter> parameters = new HashMap<>();
+		parameters.put("cobDate", datePara);
+		JobParameters jobParas = new JobParameters(parameters);
+		
+		JobExecution jobExec = MetaDataInstanceFactory.createJobExecution("job", 333L, 555L, jobParas);
+		StepExecution execution = jobExec.createStepExecution("stepName");
+		return execution;
+	}
+	
+	@Configuration
+	@Import(DirectParentContext.class)
+	static class DirectParentTestConfig{
+		@Bean 
+		public DataSource dataSource() {
+			return null;
+		}
+	}
+}
+```
+
+关于设置JobParameter有个坑，如果你从execution里面拿Map放参数进去，你永远不会成功，因为它给你是全新的Map。也就是说这个Map只读，不可写。
+
+org.springframework.batch.core.JobParameters.java  
+
+```java
+	/**
+	 * Get a map of all parameters, including string, long, and date.
+	 * 
+	 * @return an unmodifiable map containing all parameters.
+	 */
+	public Map<String, JobParameter> getParameters(){
+		return new LinkedHashMap<String, JobParameter>(parameters);
+	}
 ```
 
 ## 致谢
@@ -103,3 +189,7 @@ https://www.baeldung.com/spring-boot-testing
 https://www.baeldung.com/java-spring-mockito-mock-mockbean 
 
 https://stackoverflow.com/questions/31587639/testing-spring-bean-with-post-construct?noredirect=1&lq=1
+
+https://docs.spring.io/spring-batch/trunk/reference/html/testing.html#d5e3531
+
+https://github.com/spring-projects/spring-boot/issues/9609
