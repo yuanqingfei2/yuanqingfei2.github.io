@@ -53,9 +53,9 @@ public class RapidFacItemWriterTest {
 }	
 ```
 
-## 问题来了，如果你要测试的bean使用了@PostConstruct该怎么办
+## 如何测试@PostConstruct的bean
 
-我们知道@PostConstruct的方法在Springcontext中是加载完构造体就要执行的，如果这个方法里面的依赖需要mock怎么办，你可能会说，使用@Before阿，可是并没有用，因为@before执行代码在@PostConstruct之后。 方法是基于原有的springcontext创建测试context，在所依赖的bean里mock出想要的行为。如果你的名字不同（下面例子中的altIdDao），就要使用@Primary来区分。如果名字相同，会自动override。
+我们知道@PostConstruct的方法在Springcontext中是加载完构造体就要执行的，如果这个方法里面的依赖需要mock怎么办，你可能会说，使用@Before阿，可是并没有用，因为@Before后运行。 方法是基于原有的springcontext创建测试context，在所依赖的bean里mock出想要的行为。如果你的名字不同（下面例子中的altIdDao），就要使用@Primary来区分。如果名字相同，会自动override。
 
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -91,8 +91,9 @@ public class CurveResolutionOrganizationTest {
               }
        }
 }
+```
 
-##　如何测试StepScope的bean呢
+## 如何测试@StepScope的bean
 
 ```java
 	@Bean
