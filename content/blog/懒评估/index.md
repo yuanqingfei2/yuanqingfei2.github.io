@@ -120,9 +120,6 @@ class LazyTest {
 
 * Scala 2.10, 2.12
 ```java
-import scala.reflect.ScalaSignature;
-
-@ScalaSignature(bytes="\006\001q1A!\001\002\001\013\tAA*\031>z)\026\034HOC\001\004\003\035aT-\0349usz\032\001a\005\002\001\rA\021qAC\007\002\021)\t\021\"A\003tG\006d\027-\003\002\f\021\t1\021I\\=SK\032DQ!\004\001\005\0029\ta\001P5oSRtD#A\b\021\005A\001Q\"\001\002\t\021I\001\001R1A\005\002M\t1!\\:h+\005!\002CA\013\033\033\0051\"BA\f\031\003\021a\027M\\4\013\003e\tAA[1wC&\0211D\006\002\007'R\024\030N\\4")
 public class LazyTest
 {
   private String msg;
@@ -146,6 +143,10 @@ public class LazyTest
   }
 }
 ```
+
+至于为什么抛弃了Double Checking而转用votatile，这就是另外一个[故事](https://en.wikipedia.org/wiki/Double-checked_locking#Usage_in_Java)了。简短的说，就是如下的解释了。
+
+> The real problem is that Thread A may assign a memory space for instance before it is finished constructing instance. Thread B will see that assignment and try to use it. This results in Thread B failing because it is using a partially constructed version of instance.
 
 
 ## 致谢
