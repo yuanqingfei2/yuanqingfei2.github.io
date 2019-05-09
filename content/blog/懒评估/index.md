@@ -16,6 +16,8 @@ oneToThree = list.takeFirst(3)
 print(oneToThree) // [1, 2, 3]
 ```
 
+关于节约计算这块，在pipeline计算的时候会非常明显。
+
 ## Java
 * Java 8之前
 只支持很有限的一个LE实现，就是[短路评估(Short-circuit_evaluation)](https://en.wikipedia.org/wiki/Short-circuit_evaluation)
@@ -59,7 +61,10 @@ this match {
 
 * 例子
 
-[Stream](https://www.scala-lang.org/api/2.12.8/scala/collection/immutable/Stream.html) : Lazy版的List
+Stream : Lazy版的List。Java版的[Stream](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html#package.description); Scala版的[Stream](https://www.scala-lang.org/api/2.12.8/scala/collection/immutable/Stream.html)
+
+以Scala版为例：
+
 ```bash
 scala> val stream = (1 to 10000).toStream
 stream: scala.collection.immutable.Stream[Int] = Stream(1, ?)
