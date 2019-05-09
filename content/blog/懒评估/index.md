@@ -40,11 +40,13 @@ Scala可以使用关键词lazy来实现“按需”LE。
 ```bash
 scala> val x = 15
 x: Int = 15
+
 scala> lazy val y = 13
 y: Int = <lazy>
 ```
 
 * 参数
+
 ```scala
 def foo(x: Int): Int={}      //SE 
 def foo(x: => Int): Int={}   //LE
