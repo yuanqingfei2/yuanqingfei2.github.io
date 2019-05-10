@@ -7,6 +7,7 @@ description: "是什么，为什么以及在Java、Scala中的应用"
 懒评估(Lazy Evaluation，下面简称LE)顾名思义就是和紧评估(Strict Evaluation, SE)对应，是指延迟计算直到需要的时候，如果只是这样，我们称它为“按名”(by name)，但是还可以更深一层，如果我们能够缓存第一次评估的结果，这样就可以节约大量的计算。到了这一层，我们就叫“按需”(by need)。
 
 LE在Functional Programming中很有用，因为它很理想地实现了递归模型而不会栈溢出(Stack Overflow)。比如
+
 ```scala
 def addOne(n) = [n] + addOne(n + 1)
 // [1, 2, 3, 4, 5, 6, ...]
@@ -21,6 +22,7 @@ print(oneToThree) // [1, 2, 3]
 ## Java
 * Java 8之前
 只支持很有限的一个LE实现，就是[短路评估(Short-circuit_evaluation)](https://en.wikipedia.org/wiki/Short-circuit_evaluation)
+
 ```java
 public boolean isTrue() {
     return isBTrue() || isATrue();
@@ -37,6 +39,7 @@ Scala默认和Java一样都是SE的，但是可以显示声明LE。
 
 * 变量
 Scala可以使用关键词lazy来实现“按需”LE。
+
 ```bash
 scala> val x = 15
 x: Int = 15
@@ -48,10 +51,8 @@ y: Int = <lazy>
 * 参数
 
 ```scala
-def foo(x: Int): Int={}      //SE 
-def foo(x: => Int): Int={}   //LE
-
-// The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.  
+// The arrow `=>` in front of the argument type `B` means that the function `f` takes its 
+// second argument by name and may choose not to evaluate it.   
 def foldRight[B](z: => B)(f: (A, => B) => B): B = 
 this match {
     // If `f` doesn't evaluate its second argument, the recursion never occurs.
@@ -165,7 +166,7 @@ public class LazyTest
 }
 ```
 
-至于为什么抛弃了Double Checking而转用votatile，这就是另外一个[故事](https://en.wikipedia.org/wiki/Double-checked_locking#Usage_in_Java)了。简短的说，就是如下的解释了。
+至于为什么抛弃了Double Checking而转用votatile，这就是另外一个[故事](https://en.wikipedia.org/wiki/Double-checked_locking#Usage_in_Java)了。简短的说，就是如下的[解释](https://stackoverflow.com/questions/7855700/why-is-volatile-used-in-double-checked-locking)了。
 
 > The real problem is that Thread A may assign a memory space for instance before it is finished constructing instance. Thread B will see that assignment and try to use it. This results in Thread B failing because it is using a partially constructed version of instance.
 
