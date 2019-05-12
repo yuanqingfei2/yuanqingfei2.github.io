@@ -5,7 +5,7 @@ description: "解释了下之前blog的构建以及现在的构建。说明为�
 ---
 ## 前情提要
 
-两年前(2017)搞了一个， 也就是[为艺术而技术](http://yuanqingfei.me),采用的当时流行的[Jekyll](https://jekyllrb.com/)，它是基于[Ruby](https://www.ruby-lang.org/en/)语言的。但是它有个很诱人的特点就是可以很方便的**免费**使用[Github Pages](https://pages.github.com/)来做静态网站。步骤如下：
+两年前(2017)搞了一个， 也就是[这里](http://yuanqingfei.me),采用的当时流行的[Jekyll](https://jekyllrb.com/)，它是基于[Ruby](https://www.ruby-lang.org/en/)语言的。但是它有个很诱人的特点就是可以很方便的**免费**使用[Github Pages](https://pages.github.com/)来做静态网站。步骤如下：
 
 * 选择一个theme，[Jekyllthemes](http://jekyllthemes.org/)里有很多，我采用的是[Minimal Mistakes](https://mademistakes.com/work/minimal-mistakes-jekyll-theme/)。
 
