@@ -37,7 +37,7 @@ class Layout extends React.Component {
             fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
           }}
-        >        
+        >
           <Link
             style={{
               boxShadow: `none`,
@@ -47,7 +47,7 @@ class Layout extends React.Component {
             to={`/`}
           >
             {title}
-          </Link>          
+          </Link>
         </h3>
       )
     }
@@ -63,7 +63,10 @@ class Layout extends React.Component {
         <header>{header}</header>
         <main>{children}</main>
         <footer>
-          © 2019 - {new Date().getFullYear()} 为艺术而技术         
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png"/>
+          </a>
+          © 2019 - {new Date().getFullYear()} yuanqingfei
         </footer>
       </div>
     )
