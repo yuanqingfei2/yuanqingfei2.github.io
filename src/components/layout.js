@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 
+
 import { rhythm, scale } from "../utils/typography"
 
 class Layout extends React.Component {
@@ -51,6 +52,7 @@ class Layout extends React.Component {
         </h3>
       )
     }
+    
     return (
       <div
         style={{
@@ -62,12 +64,12 @@ class Layout extends React.Component {
       >
         <header>{header}</header>
         <main>{children}</main>
-        <footer>
-          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-              <img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png"/>
-          </a>
+        <footer>        
           © 2019 - {new Date().getFullYear()} yuanqingfei
         </footer>
+        <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/'>
+          <img alt="Creative Commons License" style={{width:88, height:31, border: 0}} src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png"/> 
+        </a>
       </div>
     )
   }
