@@ -1,9 +1,9 @@
 module.exports = {
   pathPrefix: "/yuanqingfei2.github.io",
   siteMetadata: {
-    title: `青梅嗅`,
+    title: `为艺术而技术`,
     author: `Qingfei Yuan`,
-    description: `青梅嗅`,
+    description: `为艺术而技术`,
     siteUrl: `https://yuanqingfei.com`,
     social: {
       twitter: `yuanqingfei`,
