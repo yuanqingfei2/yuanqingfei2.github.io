@@ -1,6 +1,6 @@
 ---
 title: JS同步与异步
-date: "2019-05-１７T15:17:00.000Z"
+date: "2019-05-17T15:17:00.000Z"
 description: "JS同步与异步的实现与交换"
 ---
 
@@ -22,23 +22,23 @@ some_3secs_function(some_value, function() {
 
 * 使用[promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
+这篇[文章](https://javascript.info/promise-basics)很好。
+
 ```javascript
 new Promise(function(fulfill, reject){
-    //do something for 5 seconds
     fulfill(result);
 }).then(function(result){
+    // deal with the result of the first promise
+}).then(function(){
+   // start the second promise
     return new Promise(function(fulfill, reject){
-        //do something for 5 seconds
         fulfill(result);
     });
 }).then(function(result){
-    return new Promise(function(fulfill, reject){
-        //do something for 8 seconds
-        fulfill(result);
-    });
-}).then(function(result){
-    //do something with the result
-});
+    //do something with the result of the second promise
+}).catch(function(error){
+   // deal with error
+};
 ```
 
 * 使用[Q](https://github.com/kriskowal/q)
@@ -64,6 +64,12 @@ Q.fcall(function(){
 }).done();
 ```
 
+* promises 与 Q 在chain上的区别
+
+我的观察是promises在处理完之前的promise后需要return一个新的promise然后继续。而Q则是把事先定义好的defered的东西直接连接起来，不需要再return了。
+
+他们的区别这篇[文章](https://lucybain.com/blog/2016/js-promises-vs-deferred/)写的比较好。
+
 * 使用[Promises](https://www.promisejs.org/)
 
 ```javascript
@@ -81,8 +87,6 @@ function readJSON(filename){
 }
 ```
 
-一般来说推荐使用第二种方式，因为它是官方标准。　如果不复杂，也可以采用第一种方式。　
-
 ## 同步函数异步化　
 
 * setTimeout
@@ -93,11 +97,10 @@ setTimeout(doSomethingElse, 10);
 setTimeout(doSomethingUsefulThisTime, 10);
 ```
 
-
 ## 感谢
 
 * https://medium.com/@siddharthac6/javascript-execution-of-synchronous-and-asynchronous-codes-40f3a199e687
 
 * https://stackoverflow.com/questions/5187968/how-should-i-call-3-functions-in-order-to-execute-them-one-after-the-other
 
-* https://github.com/kriskowal/q
+* https://coderwall.com/p/ijy61g/promise-chains-with-node-js
