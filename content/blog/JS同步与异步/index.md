@@ -6,9 +6,32 @@ description: "JS同步与异步的实现与交换"
 
 JS本身是单线程的，默认当然就是同步的。具体实现原理，请阅这篇[文章](https://medium.com/@siddharthac6/javascript-execution-of-synchronous-and-asynchronous-codes-40f3a199e687)。但是可以很方便的实现异步函数。同步函数异步化以及异步函数同步化是我们经常遇到的问题，下面逐一解释。
 
+## 同步函数异步化　
+
+* setTimeout
+
+```javascript
+ setTimeout(function(){ alert("Hello"); }, 3000);
+```
+
+* [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+```javascript
+var promise = new Promise(function(resolve, reject) {
+  setTimeout(function() {
+    console.log('Hello');
+  }, 3000);
+});
+console.log(promise);
+```
+
+* [Q](https://github.com/kriskowal/q)
+
+  我还没有怎么弄懂，以后补上。
+
 ## 异步函数同步化
 
-* 通常，我们就用Callback来实现。
+* [Callback](https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced)
 
 ```javascript
 some_3secs_function(some_value, function() {
@@ -20,7 +43,7 @@ some_3secs_function(some_value, function() {
 });
 ```
 
-* 使用[promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+* [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 这篇[文章](https://javascript.info/promise-basics)很好。
 
@@ -41,7 +64,7 @@ new Promise(function(fulfill, reject){
 };
 ```
 
-* 使用[Q](https://github.com/kriskowal/q)
+* [Q](https://github.com/kriskowal/q)
 
 ```javascript
 Q.fcall(function(){
@@ -64,13 +87,13 @@ Q.fcall(function(){
 }).done();
 ```
 
-* promises 与 Q 在chain上的区别
+* promises 与 Q 在多个promise chain上的区别
 
 我的观察是promises在处理完之前的promise后需要return一个新的promise然后继续。而Q则是把事先定义好的defered的东西直接连接起来，不需要再return了。
 
 他们的区别这篇[文章](https://lucybain.com/blog/2016/js-promises-vs-deferred/)写的比较好。
 
-* 使用[Promises](https://www.promisejs.org/)
+* 另外一个[Promises](https://www.promisejs.org/)库
 
 ```javascript
 function readFile(filename, enc){
@@ -87,15 +110,7 @@ function readJSON(filename){
 }
 ```
 
-## 同步函数异步化　
 
-* setTimeout
-
-```javascript
-setTimeout(doSomething, 10);
-setTimeout(doSomethingElse, 10);
-setTimeout(doSomethingUsefulThisTime, 10);
-```
 
 ## 感谢
 
