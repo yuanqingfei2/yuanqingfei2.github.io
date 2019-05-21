@@ -16,20 +16,41 @@ JS本身是单线程的，默认当然就是同步的。具体实现原理，请
 
 * [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
+创造promise。 
+
 ```javascript
 var promise = new Promise(function(resolve, reject) {
-  setTimeout(function() {
-    console.log('Hello');
-  }, 3000);
+    // some heavy opertion
+    console.log('Heavy operation');
+    // resolve or reject
+    resolve(results)
+    if(err) reject(err, null);
 });
 console.log(promise);
 ```
 
 * [Q](https://github.com/kriskowal/q)
 
-  我还没有怎么弄懂，以后补上。
+同样是创造promise，方式稍微不同。
+
+```javascript
+var promise = function(){
+    var deferred = Q.defer();
+
+    // resolve or reject
+    if(err) {
+        deferred.reject(err, null);
+    } else {
+        deferred.resolve(result);
+    }
+
+    return deferred.promise;
+}
+```
 
 ## 异步函数同步化
+
+在promise之后利用then来连接确保顺序执行。如果是多个promise，需要在完成前一个promise的同时返回下一个promise，这样可以顺序执行并处理其结果。
 
 * [Callback](https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced)
 
@@ -66,6 +87,8 @@ new Promise(function(fulfill, reject){
 
 * [Q](https://github.com/kriskowal/q)
 
+同样是利用then，本质上和上文的Promise一样。
+
 ```javascript
 Q.fcall(function(){
     // create promise with fcall in step 1 
@@ -87,13 +110,9 @@ Q.fcall(function(){
 }).done();
 ```
 
-* promises 与 Q 在多个promise chain上的区别
-
-我的观察是promises在处理完之前的promise后需要return一个新的promise然后继续。而Q则是把事先定义好的defered的东西直接连接起来，不需要再return了。
-
-他们的区别这篇[文章](https://lucybain.com/blog/2016/js-promises-vs-deferred/)写的比较好。
-
 * 另外一个[Promises](https://www.promisejs.org/)库
+
+没有本质区别，语法稍有不同。
 
 ```javascript
 function readFile(filename, enc){
@@ -109,8 +128,6 @@ function readJSON(filename){
   return readFile(filename, 'utf8').then(JSON.parse);
 }
 ```
-
-
 
 ## 感谢
 
