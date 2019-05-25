@@ -142,7 +142,7 @@ Class "AbstractRapidTask" has 0 references	AbstractRapidTask.java	/xxx/tasks	lin
 
 * 单元测试
 
-关于Spring环境下的测试，请参考之前写的这篇[总结]()
+关于Spring环境下的测试，请参考之前写的这篇[总结](https://www.yuanqingfei.com/Spring%20Test/)。
 
 * 集成测试
 
