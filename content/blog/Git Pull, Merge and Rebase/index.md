@@ -13,6 +13,15 @@ description: "Git Pull, Merge and Rebase"
 ![Fast-forward](https://git-scm.com/book/en/v2/images/basic-branching-4.png)
 这种类型就相当于把主线直接提前到和merge近来的支线的位置（master -> hotfix），是最简单的。
 
+```bash
+$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
+ 1 file changed, 2 insertions(+)
+```
+
 ### Merge by Three-way
 
 所谓三方，如下所示
