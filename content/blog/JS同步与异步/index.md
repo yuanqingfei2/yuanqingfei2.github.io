@@ -50,7 +50,7 @@ var promise = function(){
 
 ## 异步函数同步化
 
-在promise之后利用then来连接确保顺序执行。如果是多个promise，需要在完成前一个promise的同时返回下一个promise，这样可以顺序执行并处理其结果。
+callback是最常用的办法。
 
 * [Callback](https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced)
 
@@ -63,6 +63,8 @@ some_3secs_function(some_value, function() {
   });
 });
 ```
+
+ES6支持promise了，在promise之后利用then来连接确保顺序执行。如果是多个promise，需要在完成前一个promise的同时返回下一个promise，这样可以顺序执行并处理其结果。
 
 * [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -87,7 +89,7 @@ new Promise(function(fulfill, reject){
 
 * [Q](https://github.com/kriskowal/q)
 
-同样是利用then，本质上和上文的Promise一样。
+Q同样是利用then，逻辑上和上文的Promise一样。
 
 ```javascript
 Q.fcall(function(){
