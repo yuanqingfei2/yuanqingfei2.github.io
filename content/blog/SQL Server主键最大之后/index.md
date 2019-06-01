@@ -13,6 +13,8 @@ Server: Msg 8115, Level 16, State 1, Line 1 Arithmetic overflow error converting
 
 ## 预防
 
+以下这个脚本可以让你知道你的数据库中有那些表的主键已经到达其类型的百分比了。比如如果到达95%，你就要准备了。
+
 ```sql
 -- define the max value for each data type
 CREATE TABLE #DataTypeMaxValue (DataType varchar(50), MaxValue bigint)
