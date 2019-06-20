@@ -6,6 +6,8 @@ description: "JS同步与异步的实现与交换"
 
 JS本身是单线程的，默认当然就是同步的。具体实现原理，请阅这篇[文章](https://medium.com/@siddharthac6/javascript-execution-of-synchronous-and-asynchronous-codes-40f3a199e687)。但是可以很方便的实现异步函数。同步函数异步化以及异步函数同步化是我们经常遇到的问题，下面逐一解释。
 
+Update on 20190620: 增加async/await
+
 ## 同步函数异步化　
 
 * setTimeout
@@ -45,6 +47,45 @@ var promise = function(){
     }
 
     return deferred.promise;
+}
+```
+
+* Async/Await
+
+这个新特性是[ECMAScript 2017 (ECMA-262)](https://www.ecma-international.org/ecma-262/8.0/#sec-async-function-definitions)引入的。它几乎是一个革命性的改进，使得JS对异步的支持更加优雅。[这篇文章](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) 对此作了很好的总结。
+
+Promise Version:
+
+```javascript
+const makeRequest = () => {
+  try {
+    getJSON()
+      .then(result => {
+        // this parse may fail
+        const data = JSON.parse(result)
+        console.log(data)
+      })
+      // uncomment this block to handle asynchronous errors
+      // .catch((err) => {
+      //   console.log(err)
+      // })
+  } catch (err) {
+    console.log(err)
+  }
+}
+```
+
+Async/Awiat Version:
+
+```javascript
+const makeRequest = async () => {
+  try {
+    // this parse may fail
+    const data = JSON.parse(await getJSON())
+    console.log(data)
+  } catch (err) {
+    console.log(err)
+  }
 }
 ```
 
@@ -138,3 +179,5 @@ function readJSON(filename){
 * https://stackoverflow.com/questions/5187968/how-should-i-call-3-functions-in-order-to-execute-them-one-after-the-other
 
 * https://coderwall.com/p/ijy61g/promise-chains-with-node-js
+
+* https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
