@@ -8,7 +8,7 @@ description: "快排序的常见语言实现"
 
 ## 快排序
 
-[快排序](https://en.wikipedia.org/wiki/Quicksort)是比较好的排序方法，平均性能大概是O(nlogn)。 基本思路如下：
+[快排序](https://en.wikipedia.org/wiki/Quicksort)是比较好的排序方法，平均性能是O(nlogn)。 基本思路如下：
 
 * 在数组中找一个元素，称之为 **pivot**  
 * 分片：把所有小于 **pivot**　的元素都放在它前面，反之放在后面。 
@@ -179,7 +179,7 @@ def qsort(list):
 	     (quicksort (remove-if (lambda (a) (<= a x)) xs))))))
 ```
 
-### 
+### Haskell
 
 ```haskell
 qsort [] = []
