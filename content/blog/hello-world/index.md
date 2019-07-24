@@ -19,9 +19,9 @@ description: "解释了下之前blog的构建以及现在的构建。说明为�
 
 ## 目前动机
 
-上面网站我写了一些文章后发现，主要都是生活方面的。 还是想打算找个地方专门写技术文章。所以转到这里[青梅嗅](htts://yuanqingfei.com)
+上面网站我写了一些文章后发现，主要都是生活方面的。 还是想打算找个地方专门写技术文章。所以转到这里[为艺术而技术](htts://yuanqingfei.com)
 
-这次采用的平台是[Gatsby](https://www.gatsbyjs.org)。本来还是享用Github Pages来做，结果不支持，也就是说你必须每次手动把生成的东西放上去。还好[Netlify](https://www.netlify.com/)支持，也就是自动发现Github Repo的更新并发布。另外还有个bonus：SSL，不用再麻烦Cloudflare，其实现在的Github Pages也已经支持SSL了，只是Cloudflare还可以看访客数量信息，所以之前的网站就不变了。
+这次采用的平台是[Gatsby](https://www.gatsbyjs.org)。本来还是享用Github Pages来做，结果不支持，也就是说你必须每次手动把生成的东西放上去。还好[Netlify](https://www.netlify.com/)支持，也就是自动发现Github Repo的更新并发布。另外还有个bonus：SSL，不用再麻烦Cloudflare，其实现在的Github Pages也已经支持SSL了.
 
 简单来说: Netlify + Godaddy + Gatsby
 
