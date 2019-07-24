@@ -121,18 +121,19 @@ description: "根据自己的经验给出几条建议"
 
 有很多办法可以删除，我是通过一个叫[UCDetector](http://www.ucdetector.org/)的工具来做的。它有很方便的[Eclipse插件](http://ucdetector.sourceforge.net/update)。 原理很简单，通过对所有方法的尝试找到所有没有被用到过的方法，属性以及类。你可以通过它给出的列表来逐一检查是否真的应该删掉，只所以还要人工介入，主要原因是有些时候它不知道一个方法是否真的有用，比如你在Spring Context通过一个方法定义了一个bean，这个方法当然不会在编译器显式调用，但是这个方法在运行时肯定有用的，所以你不能删掉。
 
-```csv
-Description	Resource	Path	Location	Type
-Method "AbstractDsp4RdsDao.loadAll()" has 0 references	AbstractDsp4RdsDao.java	/xxx/quattro/dao	line 237	UCDetector Marker - References
-Method "AbstractDsp4RdsDao.getStringFieldClause(String,String)" has 0 references	AbstractDsp4RdsDao.java	/xxx/quattro/dao	line 149	UCDetector Marker - References
-Constant "AbstractDsp4RdsDao.LESS_THAN" has 0 references	AbstractDsp4RdsDao.java	/xxx/quattro/dao	line 37	UCDetector Marker - References
-Constant "AbstractDsp4RdsDao.GREATER_THAN" has 0 references	AbstractDsp4RdsDao.java	/xxx/quattro/dao	line 38	UCDetector Marker - References
-Field "AbstractFacItemWriter.rapidDateTimeFmt" has 0 references	AbstractFacItemWriter.java	/xxx/writers	line 29	UCDetector Marker - References
-Field "AbstractFXLMTradeReader.firmAccountLEMap" has 0 references	AbstractFXLMTradeReader.java	/xxx/reader	line 32	UCDetector Marker - References
-Method "AbstractMongoDao.getDB()" has 0 references	AbstractMongoDao.java	/xxx/util/mongoDbDao	line 48	UCDetector Marker - References
-Constant "AbstractMongoDao.UPDATED_EXISTING_STATUS" has 0 references	AbstractMongoDao.java	/xxx/util/mongoDbDao	line 29	UCDetector Marker - References
-Class "AbstractRapidTask" has 0 references	AbstractRapidTask.java	/xxx/tasks	line 13	UCDetector Marker - References
-```
+|                                                                                  |                              |                      |          |                                | 
+|----------------------------------------------------------------------------------|------------------------------|----------------------|----------|--------------------------------| 
+| Description                                                                      | Resource                     | Path                 | Location | Type                           | 
+| Method "AbstractDsp4RdsDao.loadAll()" has 0 references                           | AbstractDsp4RdsDao.java      | /xxx/quattro/dao     | line 237 | UCDetector Marker - References | 
+| Method "AbstractDsp4RdsDao.getStringFieldClause(String,String)" has 0 references | AbstractDsp4RdsDao.java      | /xxx/quattro/dao     | line 149 | UCDetector Marker - References | 
+| Constant "AbstractDsp4RdsDao.LESS_THAN" has 0 references                         | AbstractDsp4RdsDao.java      | /xxx/quattro/dao     | line 37  | UCDetector Marker - References | 
+| Constant "AbstractDsp4RdsDao.GREATER_THAN" has 0 references                      | AbstractDsp4RdsDao.java      | /xxx/quattro/dao     | line 38  | UCDetector Marker - References | 
+| Field "AbstractFacItemWriter.rapidDateTimeFmt" has 0 references                  | AbstractFacItemWriter.java   | /xxx/writers         | line 29  | UCDetector Marker - References | 
+| Field "AbstractFXLMTradeReader.firmAccountLEMap" has 0 references                | AbstractFXLMTradeReader.java | /xxx/reader          | line 32  | UCDetector Marker - References | 
+| Method "AbstractMongoDao.getDB()" has 0 references                               | AbstractMongoDao.java        | /xxx/util/mongoDbDao | line 48  | UCDetector Marker - References | 
+| Constant "AbstractMongoDao.UPDATED_EXISTING_STATUS" has 0 references             | AbstractMongoDao.java        | /xxx/util/mongoDbDao | line 29  | UCDetector Marker - References | 
+| Class "AbstractRapidTask" has 0 references                                       | AbstractRapidTask.java       | /xxx/tasks           | line 13  | UCDetector Marker - References | 
+
 
 ## 写测试
 
