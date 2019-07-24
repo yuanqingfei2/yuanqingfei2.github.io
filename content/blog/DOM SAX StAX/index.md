@@ -216,9 +216,21 @@ public class StAXEventReaderExample {
 
 JAXB 要比JAXP 更抽象一点，更高一点。它不仅提供了Java对象和xml对象的解析，也提供了绑定，这样就可以不局限在底端解析的细节上了。从这个意义上来说。JAXP 已经过时。
 
+|              |              |              |                            | 
+|--------------|--------------|--------------|----------------------------| 
+| Java Version | JAXP Version | JAXB Version | jaxb2-maven-plugin Version | 
+| 1.4          | 1.1          |              |                            | 
+| 5.0          | 1.3          |              |                            | 
+| 6.0          | 1.4          | 2.0.3        |                            | 
+| 7.0          | 1.4.5        | 2.2.4-1      |                            | 
+| 7.40         | 1.5          |              |                            | 
+| 8.0          | 1.6          | 2.2.8        | 2.3(match JAXB 2.2.11)     | 
+| 9.0          |              | 2.3.0        | 2.4                        | 
+
+
 ## 今天的情况
 
-今天是项目中用到了一个老的SAX库 ---- Xerces 1.2.3，导致每次解析到80,000条记录时就报错
+今天是项目中用到了一个老的SAX库 ---- Xerces 1.2.3，xml文件压缩后还有1个多G, 导致每次解析到80,000条记录时就报错.
 
 ```
 Caused by: java.lang.RuntimeException: Internal Error: fPreviousChunk == NULL
@@ -233,6 +245,38 @@ Caused by: java.lang.RuntimeException: Internal Error: fPreviousChunk == NULL
 
 升级到1.4.4也不行，干脆把这个依赖去掉，也就是使用JDK自带的SAX库，就解决问题了。
 
+Update 2019/07/23
+结果发现jaxb2-maven-plugin失败，出现下面的错误
+
+```
+[ERROR] [SchemaGen]: Jul 23, 2019 3:48:13 PM com.sun.xml.bind.v2.util.XmlFactory createParserFactory
+SEVERE: null
+org.xml.sax.SAXNotRecognizedException: http://javax.xml.XMLConstants/feature/secure-processing
+	at org.apache.xerces.parsers.AbstractSAXParser.setFeature(Unknown Source)
+	at org.apache.xerces.jaxp.SAXParserImpl.setFeatures(Unknown Source)
+	at org.apache.xerces.jaxp.SAXParserImpl.<init>(Unknown Source)
+	at org.apache.xerces.jaxp.SAXParserFactoryImpl.newSAXParserImpl(Unknown Source)
+	at org.apache.xerces.jaxp.SAXParserFactoryImpl.setFeature(Unknown Source)
+```
+
+原来测试也引入了另外一个版本的Xerces 2.4.0，移掉就好了。
+
+```
+[INFO] +- com.mockrunner:mockrunner-jdbc:jar:2.0.1:test
+[INFO] |  \- com.mockrunner:mockrunner-core:jar:2.0.1:test
+[INFO] |     +- jdom:jdom:jar:1.0:compile
+[INFO] |     +- oro:oro:jar:2.0.8:test
+[INFO] |     +- com.kirkk:jaranalyzer:jar:1.2:test
+[INFO] |     |  +- bcel:bcel:jar:5.1:test
+[INFO] |     |  |  \- regexp:regexp:jar:1.2:test
+[INFO] |     |  +- jakarta-regexp:jakarta-regexp:jar:1.4:test
+[INFO] |     |  \- ant:ant:jar:1.6.5:test
+[INFO] |     \- nekohtml:nekohtml:jar:0.9.5:test
+[INFO] |        \- xerces:xercesImpl:jar:2.4.0:test
+```
+
+根据[这位大婶](http://www.odi.ch/weblog/posting.php?posting=689)的建议，尽量去掉所有对Xerces的依赖。因为我们已经看到JDK中已经有最经过实践检验的版本了。我的这次经历验证了这一点。
+
 ## 感谢
 
 * https://www.codevoila.com/post/62/xml-processing-in-java-jaxp-dom-example
@@ -243,5 +287,9 @@ Caused by: java.lang.RuntimeException: Internal Error: fPreviousChunk == NULL
 
 * https://docs.oracle.com/cd/E17802_01/webservices/webservices/docs/1.6/tutorial/doc/SJSXP2.html
 
+* https://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding
 
+* https://en.wikipedia.org/wiki/Java_API_for_XML_Processing
+
+* https://javaee.github.io/jaxb-v2/doc/user-guide/release-documentation.html#deployment-migrating-jaxb-2-0-applications-to-javase-6
 
