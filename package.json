@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "skill-for-arts-blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "personal blog of qingfei",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Qingfei <yuanqingfei@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

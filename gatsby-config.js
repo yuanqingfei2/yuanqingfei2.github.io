@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: "/yuanqingfei2.github.io",
+  pathPrefix: "/forArts-blog",
   siteMetadata: {
     title: `为艺术而技术`,
     author: `Qingfei Yuan`,
