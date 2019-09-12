@@ -21,6 +21,19 @@ Process ‘command ‘C:\Program Files\Java\jre1.8.0_144\bin\java.exe’’ fini
 
 Kotlin和Spring的整合的时候，由于Spring的`@ComponentScan`[一定要求有包名](https://stackoverflow.com/questions/41729712/spring-application-does-not-start-outside-of-a-package)，如果你的类没有包名，抱歉，你的类就无法被Spring识别和加载。我当时就死活加载不上Swagger2, 老是遇到如下[Swagger ui stuck on unable to infer base url](https://github.com/springfox/springfox/issues/1996)的错误，直到看到[这里]（https://github.com/springfox/springfox/issues/1996#issuecomment-333560017）才明白问题所在。
 
+```kotlin
+package your.pakckage.name //don't forget!!!
+
+@Configuration
+@EnableSwagger2
+class SwaggerConfig {
+    @Autowired
+    lateinit var build: Optional<BuildProperties>
+    @Autowired
+    lateinit var git: Optional<GitProperties>
+    ...
+```
+
 ## 基于JVM 1.8的编译竟然导致POST失败
 
 在这篇文章的原文中它用的是
@@ -54,3 +67,9 @@ fun main(args: Array<String>) {
     <artifactId>kotlin-stdlib-jdk8</artifactId>
 <dependency>
 ```
+
+## Eclipse 插件要把ALL Open选择上
+
+如[这里](https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin)所说，Kotlin是依赖Kotlin-Spring插件来实现的，在Eclipse的IDE中，确保点选上，如下所示。
+
+![KotlinEclipse](eclipseKotlin.png)
