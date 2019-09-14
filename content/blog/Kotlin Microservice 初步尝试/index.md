@@ -68,6 +68,9 @@ fun main(args: Array<String>) {
 <dependency>
 ```
 
+20190913 更新
+经过实验，发现只要把`jackson-module-kotlin`的依赖加上就没有问题了。那么现在问题看起来是这样的，在原来1.6编译下，实际上是原来的Java的Jackson binder在起作用，而在1.8下面，就不行了，只有加上Jackson的Kotlin优化才行。
+
 ## Eclipse 插件要把ALL Open选择上
 
 如[这里](https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin)所说，Kotlin是依赖Kotlin-Spring插件来实现的，在Eclipse的IDE中，确保点选上，如下所示。
