@@ -31,7 +31,7 @@ description: "梳理一下自己的学习过程"
 |            | Micronaut | Javalin | Sparkjava | Ktor  | Jooby | Dropwizard | Akka-http |
 |------------|-----------|:-------:|-----------|-------|-------|------------|-----------|
 | Kotlin支持 | Y         | Y       | Y         | Y     | Y     | N          | N         |
-| 活跃开发度 | *****     | *****   | **        | ***** | ***** | *****      | *****     |
+| 活跃开发度 | 5     | 5   | 2        | 5 | 5 | 5      |      |
 | Github星数 | 2756      | 3288    | 8467      | 5641  | 1069  | 7350       | 965       |
 
 ## google趋势 
@@ -50,7 +50,7 @@ description: "梳理一下自己的学习过程"
 
 根据[Techempower](https://github.com/TechEmpower/FrameworkBenchmarks)的测试,大概性能排名如下
 
-|     | rank                | Framework | Performance (higher is better) |
+| rank|     Framework       | Performance (higher is better) | Performance (higher is better) |
 |-----|---------------------|:---------:|--------------------------------|
 | 4   | vertx-postgres      | 44979     | 95.8%                          |
 | 9   | micronaut           | 33173     | 70.6%                          |
@@ -62,8 +62,7 @@ description: "梳理一下自己的学习过程"
 
 ## 小结
 
-综上，值得重点关注的是Vertx 和 Micronaut，本次讨论的主要是后端，下次讨论前段的webAseembly和cross platform programming的问题，先挖个坑。
-
+综上，值得重点关注的是Vertx 和 Micronaut。本次讨论的主要是后端，下次讨论前段的webAseembly和cross platform programming的问题，先挖个坑。
 
 ## 感谢
 
