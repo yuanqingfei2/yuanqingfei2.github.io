@@ -34,7 +34,7 @@ tasks.withType<KotlinCompile> {
 
 ## 多平台支持
 
-In Intellij in Settings -> Build, Execution, Deployment-> Compiler -> Kotlin Compiler append to Additional command line parameters: field command -Xmulti-platform.
+In Intellij in Settings -> Build, Execution, Deployment-> Compiler -> Kotlin Compiler append to Additional command line parameters: field command `-Xmulti-platform`.
 
 来源：[stackoverflow](https://stackoverflow.com/questions/48852066/kotlin-multi-platform-feature )
 
@@ -42,7 +42,7 @@ In Intellij in Settings -> Build, Execution, Deployment-> Compiler -> Kotlin Com
 
 本来打算使用 Vertx 的[plugin](https://github.com/jponge/vertx-gradle-plugin)来启动后台的，结果发现即使配置如下没问题的情况下，执行 `gradle build vertxRun`还是说找不到类，后来在[这里](https://github.com/jponge/vertx-gradle-plugin/issues/30)才发现目前这个plugin根本就还不支持变化的文件结构。 
 
-gist:[yuanqingfei]76afa0c6b179b32565b435a875548b8e
+`gist:yuanqingfei/76afa0c6b179b32565b435a875548b8e`
 
 
 目前只能用Run的方式启动，不过还没有搞清楚如何把groovy的方式用Kotlin DSL来写`jvmJar`之类的task.
