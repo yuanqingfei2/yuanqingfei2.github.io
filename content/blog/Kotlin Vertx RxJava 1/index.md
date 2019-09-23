@@ -30,6 +30,16 @@ tasks.withType<KotlinCompile> {
 }
 ```
 
+Or
+
+```kotlin
+tasks.withType(KotlinCompile::class).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+```
+
 来源：[github](https://github.com/gradle/kotlin-dsl-samples/issues/1368) 
 
 ## 多平台支持
