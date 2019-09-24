@@ -66,7 +66,7 @@ jvmJar {
 
 task run(type: JavaExec, dependsOn: [jvmJar]) {
     group = "application"
-    main = "sample.SampleJvmKt"
+    main = "sample.MainKt"
     classpath(configurations.jvmRuntimeClasspath, jvmJar)
     args = []
 }
@@ -76,5 +76,19 @@ task run(type: JavaExec, dependsOn: [jvmJar]) {
 
 `gist:yuanqingfei/e89a90ee163b7d2468cd04eec90b44fb`
 
+转的过程关键是你要给出类型，而类型的获取可以使用如下命令(以jsBrowserWebpack为例))：
+
+```bash
+aaron@aaron-w530:/var/docker/project/kotlin-vertx-react$ gradle help --task jsBrowserWebpack
+
+Path
+     :jsBrowserWebpack
+
+Type
+     KotlinWebpack (org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack)
+
+```
+
 来源1： [Kotlin Official](https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/)
+
 来源2： [jnizet](https://github.com/jnizet/gradle-kotlin-dsl-migration-guide)
