@@ -54,5 +54,27 @@ In Intellij in Settings -> Build, Execution, Deployment-> Compiler -> Kotlin Com
 
 `gist:yuanqingfei/76afa0c6b179b32565b435a875548b8e`
 
+## Run 的方式来启动后端
 
-目前只能用Run的方式启动，不过还没有搞清楚如何把groovy的方式用Kotlin DSL来写`jvmJar`之类的task.
+费了半天劲学习Gradle DSL，掌握一点皮毛。最麻烦转的就是下面这点
+
+```kotlin
+jvmJar {
+    dependsOn(jsBrowserWebpack)
+    from(new File(jsBrowserWebpack.entry.name, jsBrowserWebpack.outputPath))
+}
+
+task run(type: JavaExec, dependsOn: [jvmJar]) {
+    group = "application"
+    main = "sample.SampleJvmKt"
+    classpath(configurations.jvmRuntimeClasspath, jvmJar)
+    args = []
+}
+```
+
+转好之后
+
+`gist:yuanqingfei/e89a90ee163b7d2468cd04eec90b44fb`
+
+来源1： [Kotlin Official](https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/)
+来源2： [jnizet](https://github.com/jnizet/gradle-kotlin-dsl-migration-guide)
