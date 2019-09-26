@@ -8,6 +8,18 @@ description: "记录下一点学习感想"
 
 稍微说下Reactive Programming这个东西，本来只不过是观察者模式的一个实现，为何能越做越大呢，说到底，还是思维方式的转变，工厂重要，还是产品重要？ 当然还是产品重要，所以最终是工厂围着产品转，在IT业内这叫以数据为导向，一切都是要为数据服务，而数据流最讨厌的就是死板。想想以下城市的自来水管道和多米诺骨牌，本质上都是构建反应模式，然后数据驱动。而在今天这个Functional Programming加持下，这种模式如鱼得水，当然这里必须要表扬以下首开风气之先的NodeJS.
 
+**20190924 Update:**
+<-------------
+Reactive Programming 在JVM里面主要是三大流派：RX, AKKA 和 Reactor(Spring Flux用的就是它)，其中RX是主流，[RX中处理back pressure的API](https://www.reactive-streams.org/)已经被吸收进入JAVA 9(java.util.concurrent.Flow)了，也就是RXJava2，Vertx对RXJava2也有不错的支持，后来看了[这篇文章](https://medium.com/@elizarov/reactive-streams-and-kotlin-flows-bfd12772cda4) 以及 [这篇文章](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-part-1-2-4f62ecc4f99b)才发现实际上，由于Kotlin的coroutine的缘故，Kotlin版的Flow更加高效，所以今后的方向是Vertx + [Kotlin Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
+
+当然，如果是继续学习RXJava2 以及 Vertx，由Clement Escoffier写的这两篇文章不可错过：
+
+* http://escoffier.me/rxjava-hol/
+
+* https://developers.redhat.com/blog/2018/04/18/eclipse-vertx-reactive-extensions/
+
+------------>
+
 废话不多说，今天直接用Vert.x搞了个简配版的CRUD练练手，感受一下。
 
 ## Gradle 配置
