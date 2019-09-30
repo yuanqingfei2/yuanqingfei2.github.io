@@ -92,3 +92,15 @@ Type
 来源1： [Kotlin Official](https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/)
 
 来源2： [jnizet](https://github.com/jnizet/gradle-kotlin-dsl-migration-guide)
+
+## 后端的Netty目前版本需要JAVA 8, JAVA 9不行
+
+不行不是说啥都不行，而是你把log的DEBUG模式打开后，会有错误信息出现
+
+## 使用H2内存数据库需要配置
+
+一开始就用默认`jdbc:h2:mem:regular` 死活不行，需要更改为 `jdbc:h2:mem:regular;DB_CLOSE_DELAY=-1;`
+
+## Kotlin data class在json互相转的时候需要特殊依赖
+
+正常情况下会报错误说是没有默认构造体，需要增加依赖`implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")`， 然后代码里添加`Json.mapper.registerModule(KotlinModule())` 即可
