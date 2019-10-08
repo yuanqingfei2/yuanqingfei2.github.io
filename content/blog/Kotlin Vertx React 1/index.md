@@ -104,3 +104,14 @@ Type
 ## Kotlin data class在json互相转的时候需要特殊依赖
 
 正常情况下会报错误说是没有默认构造体，需要增加依赖`implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")`， 然后代码里添加`Json.mapper.registerModule(KotlinModule())` 即可
+
+## Exposed 库的一个问题
+
+当数据库是H2时（其他数据库不知道），创建自增主键表时，只能`val id = integer("id").primaryKey().autoIncrement()` , 顺序颠倒一下 `val id = integer("id").autoIncrement().primaryKey()`，就会报如下错误
+
+```
+Caused by: org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE USERS MODIFY COLUMN ID INT AUTO_INCREMENT PRIMARY[*] KEY"; SQL statement:
+ALTER TABLE USERS MODIFY COLUMN ID INT AUTO_INCREMENT PRIMARY KEY [42000-197]
+```
+
+如果使用IntIdTable也是如此。
