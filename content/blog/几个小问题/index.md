@@ -72,7 +72,7 @@ javax.mail.SendFailedException: Send failure (javax.mail.MessagingException: Una
     <configuration>
         <!--  do not change the version in source code because of too many will involved, instead, 
                 as icva will migrate to quattra, we will do this in quattra project -->				
-        <packageName>com.citi.icva.xml.v1_0</packageName>
+        <packageName>com.xxx.xxx.xml.v1_0</packageName>
         <schemaDirectory>${basedir}/src/main/resources</schemaDirectory>
         <bindingDirectory>${basedir}/src/main/resources</bindingDirectory>
         <clearOutputDir>true</clearOutputDir>
