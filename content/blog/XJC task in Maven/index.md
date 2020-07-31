@@ -1,5 +1,7 @@
 ---
+title: XJC task in Maven
 date: "2020-07-30T17:07:00.000Z"
+description: "XJC task in Maven"
 ---
 
 谁也没有想到XSD的生命周期会这么长，即便在如今json大行天下的现在估计一时半会也不会死掉。近日在用Maven的插件生成代码的时候遇到两个需求，记录如下：
@@ -107,4 +109,4 @@ Maven文件：
 </jaxb:bindings>
 ```
 
-这样生成出来的就都是top类而不是内部类了。
+这样生成出来的就都是top类而不是内部类了。这种情况有时是需要的，比如我需要利用生成的Java类来做Spring支持的MongoDB模型类，如果是嵌套类，就会抛出不支持类作为field的错误。
