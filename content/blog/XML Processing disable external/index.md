@@ -73,7 +73,7 @@ Document document = builder.build(new File(xml));
 
 ## 解决问题
 
-解决也很简单，就是要修改两个默认配置。在JDK1.7之前，用 **XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES**和**XMLInputFactory.SUPPORT_DTD**,　之后用**XMLConstants.ACCESS_EXTERNAL_DTD** 以及 **XMLConstants.ACCESS_EXTERNAL_SCHEMA**
+解决也很简单，就是要修改两个默认配置: **XMLConstants.ACCESS_EXTERNAL_DTD** 以及 **XMLConstants.ACCESS_EXTERNAL_SCHEMA**
 
 
 ```java
@@ -168,7 +168,7 @@ To disable external entity processing for Validator, configure both properties X
 
 ## 其他库
 
-XMLStants是JDK 1.5(JAXP 1.3)引入的，而上面两个新属性是JDK 1.7(JAXP 1.4.5)引入的。很多老的库不支持，比如以下是项目中的两个例子：
+XMLStants是JDK 1.5(JAXP 1.3)引入的，而上面两个新属性是JDK 1.7(JAXP 1.5. JDK7u40)引入的。很多老的库不支持，比如以下是项目中的两个例子：
 
 ```xml
 <dependency>
@@ -211,4 +211,5 @@ XMLStants是JDK 1.5(JAXP 1.3)引入的，而上面两个新属性是JDK 1.7(JAXP
 ## 资源
 
 １．　https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html
+
 ２　　https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)
