@@ -158,13 +158,13 @@ Document document = builder.build(new File(xml));
 
 还有一种说法：
 
-This rule raises an issue when any of the following are used without first disabling external entity processing: javax.xml.validation.Validator, JAXP's DocumentBuilderFactory, SAXParserFactory, Xerces 1 and Xerces 2 StAX's XMLInputFactory and XMLReaderFactory.
+>This rule raises an issue when any of the following are used without first disabling external entity processing: javax.xml.validation.Validator, JAXP's DocumentBuilderFactory, SAXParserFactory, Xerces 1 and Xerces 2 StAX's XMLInputFactory and XMLReaderFactory.
 
-To disable external entity processing for XMLInputFactory, configure one of the properties XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES or XMLInputFactory.SUPPORT_DTD to false.
+>To disable external entity processing for **XMLInputFactory**, configure one of the properties XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES or XMLInputFactory.SUPPORT_DTD to false.
 
-To disable external entity processing for SAXParserFactory, XMLReader or DocumentBuilderFactory configure one of the features XMLConstants.FEATURE_SECURE_PROCESSING or "http://apache.org/xml/features/disallow-doctype-decl" to true.
+>To disable external entity processing for **SAXParserFactory, XMLReader or DocumentBuilderFactory** configure one of the features XMLConstants.FEATURE_SECURE_PROCESSING or "http://apache.org/xml/features/disallow-doctype-decl" to true.
 
-To disable external entity processing for Validator, configure both properties XMLConstants.ACCESS_EXTERNAL_DTD, XMLConstants.ACCESS_EXTERNAL_SCHEMA to the empty string "".
+>To disable external entity processing for **Validator**, configure both properties XMLConstants.ACCESS_EXTERNAL_DTD, XMLConstants.ACCESS_EXTERNAL_SCHEMA to the empty string "".
 
 ## 其他库
 
