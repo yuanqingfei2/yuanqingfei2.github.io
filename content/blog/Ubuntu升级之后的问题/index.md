@@ -46,5 +46,16 @@ ibus=pinyin
 
 在这个过程中，需要用到root用户权限，如果忘记，可以使用 `sudo passwd root`来重新设置，具体如下![所示](https://www.cyberciti.biz/media/new/faq/2017/07/How-to-change-root-password-in-ubuntu-Linux.jpg)
 
+4. 升级之后Search不再有效。
 
+[解决方法](https://askubuntu.com/questions/1262114/search-your-computer-sorry-there-is-nothing-that-matches-your-search)如下：
 
+>sudo apt install ubuntu-unity-desktop
+
+>sudo apt remove gnome-shell
+
+>sudo dpkg-reconfigure lightdm
+
+>sudo reboot
+
+问题的根源在于升级之后gdm3变成了lightgdm。需要改回去就可以了。
