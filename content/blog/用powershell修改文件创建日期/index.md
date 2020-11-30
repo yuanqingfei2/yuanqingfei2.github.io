@@ -24,8 +24,8 @@ Get-ChildItem | ForEach {
 
 使用方法很简单，打开PowShell，切换到图片文件夹，一次性拷贝上面的全部代码，粘贴在Powshell命令行，然后执行即可。
 
-！[命令行](powershell1.JPG)
-！[结果](powershell2.JPG)
+![命令行](powershell1.JPG)
+![结果](powershell2.JPG)
 
 感谢：
 
