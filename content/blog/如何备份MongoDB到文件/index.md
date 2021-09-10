@@ -17,7 +17,7 @@ description: "记录一下自己完成的经历"
 ```bash
 tss=`date --date="180 days ago" +%s`000
 archiveFileName=`date -d @$( echo "($tss + 500) / 1000" | bc) +%Y%m%d`.json
-/usr/local/bin/mongoexport --host $MONGOHOST --port $MONGOPORT --username $USER --password $PWD --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-256 --db xxxArchive --ssl --collection=TradeArchive --query="{\"endDate\": {\"\$lt\": {\"\$date\": $tss}}}" --out=$QUATTRO_DATA/archive/tradeJsonData/$archiveFileName
+/usr/local/bin/mongoexport --host $MONGOHOST --port $MONGOPORT --username $USER --password $PWD --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-256 --db xxxArchive --ssl --sslAllowInvalidCertificates --collection=TradeArchive --query="{\"endDate\": {\"\$lt\": {\"\$date\": $tss}}}" --out=$QUATTRO_DATA/archive/tradeJsonData/$archiveFileName
 ```
 
 上面这个脚本中，query这个参数使用的是双引号，这样`$tss`才能被识别。但是其他参数的的双引号就必须要转义符号了（经过测试，参数必须要有双引号），另外`$`也必须要有转义符号。
@@ -31,7 +31,7 @@ archiveFileName=`date -d @$( echo "($tss + 500) / 1000" | bc) +%Y%m%d`.json
 删除很简单，使用的是 **eval** 参数，和query参数类似，因为也要用环境变量，所以也要用双引号，但是它的日期就不是query要求的那么严格，可以使用正常的日期，所以就如下所示:
 
 ```bash
-/usr/local/bin/mongo --host $MONGOHOST --port $MONGOPORT --username $USER --password $PWD --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-256 --ssl cvaArchive  --eval "db.XXXArchive.deleteMany({\"endDate\": {\"\$lt\": new Date($tss)}})"
+/usr/local/bin/mongo --host $MONGOHOST --port $MONGOPORT --username $USER --password $PWD --authenticationDatabase admin --authenticationMechanism SCRAM-SHA-256 --ssl --sslAllowInvalidCertificates cvaArchive  --eval "db.XXXArchive.deleteMany({\"endDate\": {\"\$lt\": new Date($tss)}})"
 ```
 
 ## 如何保证备份出错的时候终止程序
@@ -56,7 +56,7 @@ foreach ( $rows as $row ) {
 ## 最后两个注意点
 
 * 上面命令中都要有`--ssl` 否则就会出错`network error while attempting to run command 'isMaster' on host xxx`
-* 上面命令中都要有`----sslAllowInvalidCertificates`，否则就会出错`Last error: connection() : x509: certificate signed by unknown authority }, ]`
+* 上面命令中都要有`--sslAllowInvalidCertificates`，否则就会出错`Last error: connection() : x509: certificate signed by unknown authority }, ]`
 
 ## 感谢
 
