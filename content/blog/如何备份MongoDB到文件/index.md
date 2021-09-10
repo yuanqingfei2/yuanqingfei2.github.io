@@ -46,7 +46,7 @@ archiveFileName=`date -d @$( echo "($tss + 500) / 1000" | bc) +%Y%m%d`.json
 foreach ( $rows as $row ) {
     foreach ( array_keys($row) as $key) {
         if ( $key == "_id" ) {
-            $row[$key] = new \MongoId( $row[$key]['$oid'] );
+            $row[$key] = new \ObjectId( $row[$key]['$oid'] );
         }
     }
     $this->db->Users->insert( $row );
