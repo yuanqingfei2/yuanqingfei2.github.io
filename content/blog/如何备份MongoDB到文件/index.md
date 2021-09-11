@@ -4,7 +4,7 @@ date: "2021-09-10T14:11:00.000Z"
 description: "记录一下自己完成的经历"
 ---
 
-大家都知道用mongodump或者mongoexport就可以了，可是真正执行起来，还是遇到不少问题。
+大家都知道用mongodump或者mongoexport就可以了，可是真正执行起来，还是遇到不少问题的。
 
 ## 如何传bash变量到query中去
 
