@@ -10,20 +10,6 @@ module.exports = {
     },
   },
   plugins: [
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     path: `${__dirname}/content/blog`,
-    //     name: `blog`,
-    //   },
-    // },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     path: `${__dirname}/content/assets`,
-    //     name: `assets`,
-    //   },
-    // },
     {
       resolve: `gatsby-theme-blog`,
       options: {
@@ -153,12 +139,6 @@ module.exports = {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-adsense`,
-      options: {
-        publisherId: `ca-pub-4331101712098127`
       },
     },
   ],
