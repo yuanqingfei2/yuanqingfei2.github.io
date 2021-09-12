@@ -6,7 +6,7 @@ description: "梳理一下自己的学习过程"
 
 ## 常见库
 
-![chart库趋势](chartTrend.png)
+![chart库趋势](2019-11-17-chartTrend.png)
 
 由此可见，两大巨头是[chartJs](https://github.com/chartjs/Chart.js) 和[d3](https://github.com/d3/d3)。 应该优先使用这两个。然后才是[highcharts](https://github.com/highcharts/highcharts)以及[recharts](https://github.com/recharts/recharts)。关于两巨头，[这里](https://www.createwithdata.com/d3js-or-chartjs/)有个很好的介绍。
 

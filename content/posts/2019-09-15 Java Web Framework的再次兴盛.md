@@ -36,9 +36,9 @@ description: "梳理一下自己的学习过程"
 
 ## google趋势 
 
-![trend](trend.png)
+![trend](2019-09-15-trend.png)
 
-![trend2](trend2.png)
+![trend2](2019-09-15-trend2.png)
 
 从近两年的发展趋势来看，
 
