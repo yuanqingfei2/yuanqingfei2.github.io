@@ -1,3 +1,9 @@
+---
+title: 2021-12-27 学习Spring Cloud之本地部署
+date: "2021-12-27T15:58:00.000Z"
+description: "记录一下自己完成的经历"
+---
+
 最近学习Spring Cloud，趁着假期，断断续续几天把github上比较流行的学习例子[piggymetrics](https://github.com/sqshq/piggymetrics)部署完成了，现在还没有启用docker，只是作为localhost service完成部署，这过程中踩了一些坑，这里总结一下。
 
 ## 架构
@@ -34,7 +40,7 @@ Spring Cloud是基于Spring Boot的，所以他们之间的版本必须匹配，
 |Edgware|1.5.x
 |Dalston|1.5.x
 
-目前只有头两个是出于正常维护状态中，其他版本均已终止维护了。piggymetrics项目目前是基于Finchley版本的，经过实验，也可以升级到Hoxton，当然有个小问题，下面会说，但是2020与2021版本目前还不行，将来我将尝试使用最新版本。
+目前只有头两个是出于正常维护状态中，其他版本均已终止维护了。piggymetrics项目目前是基于Finchley版本的，经过实验，也可以升级到Hoxton（Hoxton.SR12），当然有个小问题，下面会说，但是2020与2021版本目前还不行，将来我将尝试使用最新版本。
 
 ## Java版本问题
 
@@ -106,4 +112,5 @@ spring:
 最终可以在http://localhost:8761/看到所有运行起来的服务
 
 ![Eureka](2021-12-27-Eureka.png)
+
 
