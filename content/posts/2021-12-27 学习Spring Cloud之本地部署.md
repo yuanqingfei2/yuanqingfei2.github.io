@@ -1,5 +1,5 @@
 ---
-title: 2021-12-27 学习Spring Cloud之本地部署
+title: 学习Spring Cloud之本地部署
 date: "2021-12-27T15:58:00.000Z"
 description: "记录一下自己完成的经历"
 ---
@@ -97,7 +97,7 @@ spring:
 
 ## AcitveMQ与RabbitMQ
 
-其实很搞笑，项目说得很清楚，使用的是RabbitMQ，我不知道那根筋搭错了，阴差阳错下载安装了ActiveMQ，结果死活不行，报错`AMQP protocol version mismatch; we are version 0-9-1, server sent signature 3,1,0,0`，还去RabbitMQ网站上查，[明明就支持AMQP 0-9-1的](https://www.rabbitmq.com/protocols.html)，后来才意识到自己用的是Active MQ，而它[只支持AMQP 1.0](https://activemq.apache.org/amqp)，而AMQP 1.0与AMQP 0-9-1是完全不同的，当然也就不兼容。
+其实很搞笑，项目说得很清楚，使用的是[RabbitMQ](https://github.com/rabbitmq/rabbitmq-server/releases)，我不知道那根筋搭错了，阴差阳错下载安装了ActiveMQ，结果死活不行，报错`AMQP protocol version mismatch; we are version 0-9-1, server sent signature 3,1,0,0`，还去RabbitMQ网站上查，[明明就支持AMQP 0-9-1的](https://www.rabbitmq.com/protocols.html)，后来才意识到自己用的是Active MQ，而它[只支持AMQP 1.0](https://activemq.apache.org/amqp)，而AMQP 1.0与AMQP 0-9-1是完全不同的，当然也就不兼容。
 
 >Despite the name, AMQP 1.0 is a radically different protocol from AMQP 0-9-1 / 0-9 / 0-8, sharing essentially nothing at the wire level. AMQP 1.0 imposes far fewer semantic requirements; it is therefore easier to add support for AMQP 1.0 to existing brokers. The protocol is substantially more complex than AMQP 0-9-1, and there are fewer client implementations.
 
