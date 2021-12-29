@@ -105,11 +105,46 @@ spring:
 
 直接去[下载](https://www.mongodb.com/try/download/community?tck=docs_server&_ga=2.12591603.552439641.1640536151-1372320638.1640536151)本地安装就可以了，我也曾经尝试免费的Atlas在线服务，可是连接失败，报错`connection rest`，不知道是不是需要配置SSL的问题。没有继续深究。
 
+在运行之前，需要创建用户以及数据库， 如下所示
+
+```javascript
+use piggymetrics
+db.createUser( { user: "user",
+                 pwd: "password",  
+                 roles: [ { role: "clusterAdmin", db: "admin" },
+                          { role: "readAnyDatabase", db: "admin" },
+                          "readWrite"] },
+               { w: "majority" , wtimeout: 5000 } );
+```
+
 ## 本地运行localhost的问题
 
 由于这个项目默认是要部署到docker上去的，所以不同的服务都有不同的名字，目前我为了体会功能，直接在Eclipse中运行，所以要修改一些名字到localhost。比如config server: `http://config:8888` --> `http://localhost:8888`， MongoDB 和 RabbitMQ的host都要做类似更改。
 
-最终可以在http://localhost:8761/看到所有运行起来的服务
+特别值得一提的是auth-service的问题，目前这个配置是会导致`java.net.UnknownHostException: auth-service`，需要在gateway和oathu2上面都改用localhost，如下所示：
+
+```yml
+security:
+  oauth2:
+    client:
+      clientId: account-service
+      clientSecret: ${ACCOUNT_SERVICE_PASSWORD}
+      accessTokenUri: http://localhost:5000/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server	
+```
+
+```yml
+zuul:
+  routes:
+    auth-service:
+        path: /uaa/**
+        url: http://localhost:5000
+        stripPrefix: false
+        sensitiveHeaders:
+```
+
+最终可以在 http://localhost:8761/ 看到所有运行起来的服务
 
 ![Eureka](2021-12-27-Eureka.png)
 
