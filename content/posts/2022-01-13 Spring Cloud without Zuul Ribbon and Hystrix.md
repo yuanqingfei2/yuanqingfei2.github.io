@@ -3,6 +3,8 @@ title: Spring Cloud without Zuul Ribbon and Hystrix
 date: "2022-01-13T00:01:00.000Z"
 ---
 
+注： 如果只想看代码，请移步[这里](https://github.com/yuanqingfei/piggymetrics/tree/jubilee)
+
 上次说到，2021版本的Spring Cloud出于netflix不再开源新版本组件而被迫放弃对Zuul，Ribbon以及部分Hystrix，那么我们尝试下在没有他们的情况下升级piggymetrics。也就是基于Spring所推荐的替代品列表：
 
 当前组件 |替代品 
