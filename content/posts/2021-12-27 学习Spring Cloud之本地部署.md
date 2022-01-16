@@ -4,6 +4,9 @@ date: "2021-12-27T15:58:00.000Z"
 description: "记录一下自己完成的经历"
 ---
 
+注： 如果只想看代码，请移步[这里](https://github.com/yuanqingfei/piggymetrics/tree/hoxton)
+
+
 最近学习Spring Cloud，趁着假期，断断续续几天把github上比较流行的学习例子[piggymetrics](https://github.com/sqshq/piggymetrics)部署完成了，现在还没有启用docker，只是作为localhost service完成部署，这过程中踩了一些坑，这里总结一下。
 
 ## 架构

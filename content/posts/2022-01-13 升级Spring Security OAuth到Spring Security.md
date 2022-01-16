@@ -3,6 +3,8 @@ title: 升级Spring Security OAuth到Spring Security
 date: "2022-01-13T11:41:00.000Z"
 ---
 
+注： 如果只想看代码，请移步[这里](https://github.com/yuanqingfei/piggymetrics/tree/jubilee)
+
 上一篇完成了Gateway相关部件的更新，本以为没事了，可是Security又有问题：
 
 ```
@@ -10,7 +12,6 @@ date: "2022-01-13T11:41:00.000Z"
 
 org.springframework.expression.spel.SpelEvaluationException: EL1011E: Method call: Attempted to call method hasScope(java.lang.String) on null context object
 	at org.springframework.expression.spel.ast.MethodReference.throwIfNotNullSafe(MethodReference.java:154) ~[spring-expression-5.3.14.jar:5.3.14]
-	at org.springframework.expression.spel.ast.MethodReference.getValueRef(MethodReference.java:83) ~[spring-expression-5.3.14.jar:5.3.14]
 ```
 
 原因[在这](https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Migration-Guide)(Spring Security OAuth 2.x to Spring Security 5.x):
@@ -26,8 +27,6 @@ org.springframework.expression.spel.SpelEvaluationException: EL1011E: Method cal
 
 feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/users] [AuthServiceClient#createUser(User)]: [{"error":"access_denied","error_description":"Access is denied"}]
 	at feign.FeignException.clientErrorStatus(FeignException.java:217) ~[feign-core-11.7.jar:na]
-	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-11.7.jar:na]
-	at feign.FeignException.errorStatus(FeignException.java:185) ~[feign-core-11.7.jar:na]
 ```
 原因是使用了新版的Spring Security，而Feign对Oauth2的支持在新版本中不再有用，也就是说，token relay不行了，无法把token从Account Service转到Auth Sercie。这篇[文章](https://www.springcloud.io/post/2022-01/feign-token-relay/)解释的好。
 
@@ -47,7 +46,7 @@ feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/
 
 ## Authorizaiton Server
 
-在新版本的Security中，已经单独把Authorization Server作为一个组件来看待，之前在Spring Security OAuth2中还只是用一个Annotation`OAuth2AuthorizationConfig.java`。我决定采用新成立的[Spring Security Authorization Server](https://github.com/spring-projects/spring-authorization-server)，因为这个项目
+在新版本的Security中，已经单独把Authorization Server作为一个组件来看待，之前在Spring Security OAuth2中还只是用一个Annotation `@EnableAuthorizationServer`。我决定采用新成立的[Spring Security Authorization Server](https://github.com/spring-projects/spring-authorization-server)，因为它已经发布生产版本了，相当可靠了。
 
 增加依赖
 
@@ -63,33 +62,12 @@ feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/
 
 在代码方面
 
-首先是Authentication和Authorization两个设置二合一，用Order来确定他们的执行顺序
-```java
-	@Bean
-	@Order(1)
-	public SecurityFilterChain authorizationFilterChain(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-		return http.build();
-	}
-
-	@Bean
-	@Order(2)
-	public SecurityFilterChain standardFilterChain(HttpSecurity http) throws Exception {
-		// @formatter:off
-		http
-			.authorizeHttpRequests((authorize) -> authorize
-				.anyRequest().authenticated()
-			)
-			.formLogin(Customizer.withDefaults());
-		// @formatter:on
-
-		return http.build();
-	}
-```
-
-其次是用新的方式配置Repository
+用新的方式配置Repository，注意下面已经import了默认`OAuth2AuthorizationServerConfiguration`，不需要额外设置SecurityFilterChain, 否则就会出现403错误。这是大半天的教训。
 
 ```java
+@Configuration
+@Import(OAuth2AuthorizationServerConfiguration.class)
+public class OAuth2AuthorizationConfig {
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
 		RegisteredClient uiClient = RegisteredClient.withId(UUID.randomUUID().toString())
@@ -128,6 +106,7 @@ feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/
 
 		return new InMemoryRegisteredClientRepository(uiClient, accountClient, statisticsClient, notificationClient);
 	}
+}
 ```
 
 由于所有的配置都写在代码里面了，所以没有配置文件方面的更改。
@@ -148,7 +127,7 @@ feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/
     </dependency>
 ```
 
-因为三个服务组件即是Resource Server，同时又是Client，所以放在一起配置。
+因为Account, statistics, notification三个服务组件即是Resource Server，同时又是Client，所以放在一起配置。
 
 ### Resource Server
 
@@ -169,11 +148,16 @@ spring:
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	http
+			.httpBasic().disable()  
+			.formLogin(AbstractHttpConfigurer::disable)  
+			.csrf(AbstractHttpConfigurer::disable)
+			.sessionManagement(sessionManagement ->  
+				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  
 			.authorizeHttpRequests((authorize) -> authorize
-                    .antMatchers("/", "/demo").permitAll()
-					// .antMatchers(HttpMethod.GET, "/accounts/**").hasAuthority("SCOPE_server")
-					// .antMatchers(HttpMethod.POST, "/accounts/**").hasAuthority("SCOPE_server")
-					.anyRequest().authenticated()
+				.antMatchers("/", "/demo").permitAll()	
+				.antMatchers(HttpMethod.GET, "/accounts/**").hasAuthority("SCOPE_server")
+				.antMatchers(HttpMethod.POST, "/accounts/**").hasAuthority("SCOPE_server")								
+				.anyRequest().authenticated()
 			)
 			.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     	
@@ -182,6 +166,8 @@ spring:
 ```
 
 可以看到我们没有之前的Annotation了，用了一个`oauth2ResourceServer`DSL的方式。Resource Server是如何知道前来的token是否是合法的呢，关键就在于前面我们配置的`jwk-set-uri`，也就是说Resource Server可以直接通过这个去Authrization Server验证。
+
+上面的配置中，一定要注意的是要把 `CSRF` disable了，否则就会遇到403错误。我在这个问题上浪费了好半天，主要是老版本的的`EnableResourceServer`就已经包含了这个含义了，而新版本中由于用到的是DSL，所有的东西都要手工添加。感谢[这篇文章](https://dev.to/toojannarong/spring-security-with-jwt-the-easiest-way-2i43)提醒。但在Autorization Server中用系统默认配置即可，无须额外专门设置。
 
 ### Client
 
@@ -228,23 +214,6 @@ spring:
 @EnableWebSecurity
 public class OAuth2ClientConfig {
 
-	@Autowired
-	public ClientRegistrationRepository clientRegistrationRepositor;
-
-	@Autowired
-	public OAuth2AuthorizedClientRepository authorizedClientRepository;
-
-	@Autowired
-	public OAuth2AuthorizedClientService authorizedClientService;
-
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.oauth2Client(oauth2Client -> oauth2Client.clientRegistrationRepository(clientRegistrationRepositor)
-				.authorizedClientRepository(authorizedClientRepository)
-				.authorizedClientService(authorizedClientService));
-		return http.build();
-	}
-
 	@Bean
 	public OAuth2AuthorizedClientManager authorizedClientManager(
 			ClientRegistrationRepository clientRegistrationRepository,
@@ -267,18 +236,29 @@ public class OAuth2ClientConfig {
 
 >A service application is a common use case for when to use an AuthorizedClientServiceOAuth2AuthorizedClientManager. Service applications often run in the background, without any user interaction, and typically run under a system-level account instead of a user account. An OAuth 2.0 Client configured with the client_credentials grant type can be considered a type of service application.
 
-注意在配置`HttpSecurity`时要么选择`SecurityFilterChain`(这是新的方式，推荐)，要么选择继承老的`WebSecurityConfigerAdapter`，如果混在一起，就会出现如下错误：
-
-```
-Caused by: java.lang.IllegalStateException: Found WebSecurityConfigurerAdapter as well as SecurityFilterChain. Please select just one.
-	at org.springframework.util.Assert.state(Assert.java:76) ~[spring-core-5.3.14.jar:5.3.14]
-	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration.springSecurityFilterChain(WebSecurityConfiguration.java:107) ~[spring-security-config-5.6.1.jar:5.6.1]
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_311]
-```
+注意在Client Config里面不需要配置`SecurityFilterChain`，否则就会在Feign调用其他service的时候出现403错误。（花费了半天才发现这个问题）
 
 ## Token Relay
 
-令牌中继是个问题，因为我们都是使用Feign来做调用，而Security Token还能否再新版本的Secrity框架下传递吗？ [这篇文章](https://www.springcloud.io/post/2022-01/feign-token-relay/)说可以，可是尚不知官方是否有正式支持？
+![relay](https://static.spring.io/blog/bwilcock/20190801/demo.png)
+
+令牌中继是个问题，因为我们都是使用Feign来做调用，而Security Token还能否再新版本的Secrity框架下传递吗？ [这篇文章](https://www.springcloud.io/post/2022-01/feign-token-relay/)说可以。
+
+如果不设置令牌中继，就会遇到403错误，如下所示：
+
+```
+feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/users] [AuthServiceClient#createUser(User)]: []
+	at feign.FeignException.clientErrorStatus(FeignException.java:217) ~[feign-core-11.7.jar:na]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-11.7.jar:na]
+	at feign.FeignException.errorStatus(FeignException.java:185) ~[feign-core-11.7.jar:na]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92) ~[feign-core-11.7.jar:na]
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:96) ~[feign-core-11.7.jar:na]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:138) ~[feign-core-11.7.jar:na]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:89) ~[feign-core-11.7.jar:na]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100) ~[feign-core-11.7.jar:na]
+	at com.sun.proxy.$Proxy200.createUser(Unknown Source) ~[na:na]
+	at com.piggymetrics.account.service.AccountServiceImpl.create(AccountServiceImpl.java:53) ~[classes/:na]
+```
 
 目前还是用老办法，手工设置header，不知道在Cirucuit Breaker的情况下还能不能用。
 
@@ -309,6 +289,14 @@ public class OAuthRequestInterceptor implements RequestInterceptor {
 }
 ```
 
+注意上面代码hard code的`withClientRegistrationId("account-service")` account-service 要和 配置文件中的注册名字要匹配起来。
+```yml
+	client:
+        registration:
+          *account-service:*
+            provider: spring
+```
+
 然后放在Feign Config里面
 
 ```java
@@ -334,8 +322,43 @@ public interface AuthServiceClient {
 }
 ```
 
-顺便吐槽一下Spring的起名方式，这两个类名是不是很相似，但是其实是在两个不同的包中的。
-`org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository`
-`org.springframework.security.oauth2.client.registration.ClientRegistrationRepository`
+结果遇到如下错误：
 
-打完收工。
+```
+feign.FeignException$Forbidden: [403] during [POST] to [http://auth-service/uaa/users] [AuthServiceClient#createUser(User)]: []
+	at feign.FeignException.clientErrorStatus(FeignException.java:217) ~[feign-core-11.7.jar:na]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-11.7.jar:na]
+	at feign.FeignException.errorStatus(FeignException.java:185) ~[feign-core-11.7.jar:na]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92) ~[feign-core-11.7.jar:na]
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:96) ~[feign-core-11.7.jar:na]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:138) ~[feign-core-11.7.jar:na]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:89) ~[feign-core-11.7.jar:na]
+	at org.springframework.cloud.openfeign.FeignCircuitBreakerInvocationHandler.lambda$asSupplier$1(FeignCircuitBreakerInvocationHandler.java:112) ~[spring-cloud-openfeign-core-3.1.0.jar:3.1.0]
+	at org.springframework.cloud.sleuth.instrument.circuitbreaker.TraceSupplier.get(TraceSupplier.java:52) ~[spring-cloud-sleuth-instrumentation-3.1.0.jar:3.1.0]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0_311]
+```
+
+注意这个错误栈中的是由CircuitBreaker发出的，这证实了之前的猜测，所以还是不行。在更复杂的配置之前，权宜之计，先把circuit breaker Disable。
+
+```yml
+feign:
+  circuitbreaker:
+    enabled: false
+```
+
+另外，如果在代码里面写密码，要用新的[格式](https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-format)。也就是在密码前面必须要有个大括号，否则就会有下面的错误。
+
+```
+java.lang.IllegalArgumentException: There is no PasswordEncoder mapped for the id "null"
+	at org.springframework.security.crypto.password.DelegatingPasswordEncoder$UnmappedIdPasswordEncoder.matches(DelegatingPasswordEncoder.java:254) ~[spring-security-crypto-5.6.1.jar:5.6.1]
+	at org.springframework.security.crypto.password.DelegatingPasswordEncoder.matches(DelegatingPasswordEncoder.java:202) ~[spring-security-crypto-5.6.1.jar:5.6.1]
+	at org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationProvider.authenticate(OAuth2ClientAuthenticationProvider.java:112) ~[spring-security-oauth2-authorization-server-0.2.1.jar:0.2.1]
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182) ~[spring-security-core-5.6.1.jar:5.6.1]
+```
+
+所以，最后留下几个小尾巴问题：
+
+* circuit breaker目前不能用，因为这样就无法为其设置新的header。
+* 新的Spring Authorization Server目前对Password类型的认证并不完善，因为这种类型在OAuth2 2.1中已经被抛弃了。所以具体到本项目中前台提交的表单数据会导致400错误。`curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "scope=ui&username=yuan123457&password=1112233&grant_type=password" http://laptop-aaron:4000/uaa/oauth2/token`
+* 不是很了解Spring Authorization Server本身的方法Security设置，目前采用的是`OAuth2AuthorizationServerConfiguration`里面的配置，，注意到如果启用`@EnableGlobalMethodSecurity(prePostEnabled = true)/@PreAuthorize("hasAuthority('SCOPE_server')")`会导致抱怨没有Authentication 对象，所以目前上面两个标注是注释掉的。
+
