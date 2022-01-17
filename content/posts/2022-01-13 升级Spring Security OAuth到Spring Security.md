@@ -356,7 +356,7 @@ java.lang.IllegalArgumentException: There is no PasswordEncoder mapped for the i
 	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182) ~[spring-security-core-5.6.1.jar:5.6.1]
 ```
 
-所以，最后留下几个小尾巴问题：
+最终，终于端到端调用成功(Gateway --> Account --> Auth)，最后留下几个小尾巴问题：
 
 * circuit breaker目前不能用，因为这样就无法为其设置新的header。
 * 新的Spring Authorization Server目前对Password类型的认证并不完善，因为这种类型在OAuth2 2.1中已经被抛弃了。所以具体到本项目中前台提交的表单数据会导致400错误。`curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "scope=ui&username=yuan123457&password=1112233&grant_type=password" http://laptop-aaron:4000/uaa/oauth2/token`
