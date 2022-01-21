@@ -21,7 +21,9 @@ date: "2022-01-16T03:27:00.000Z"
 
 ## Registry
 
-然后在account子项目中增加部分：
+整个Registry项目都可以删除了，因为外部有个Nacos可以代劳了。
+
+然后在所有子项目中增加：
 
 ```xml
     <dependency>
@@ -30,7 +32,7 @@ date: "2022-01-16T03:27:00.000Z"
     </dependency>
 ```
 
-删除部分：
+删除：
 
 ```xml
     <dependency>
@@ -39,7 +41,20 @@ date: "2022-01-16T03:27:00.000Z"
     </dependency>
 ```
 
-配置方面增加部分：
+配置方面
+
+删除Eureka的配置
+
+```yml
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/
+```
+
+增加部分：
 
 ```yml
 spring:
@@ -49,7 +64,16 @@ spring:
         server-addr: localhost:8848
 ```
 
-删除Config部分，因为我们已经不用Spring Config Server了
+在我们已经用命令`cmd startup.cmd -m standalone`启动Nacos的前提下，启动就可以看见这个Service了。
+
+![Nacos](2022-01-16-Nacos.png)
+
+
+## Config
+
+自然是可以删除Config整个项目了，另外其他项目中关于Config的配置也需要了。
+
+删除：
 
 ```yml
 spring:
@@ -60,13 +84,6 @@ spring:
       password: ${ACCOUNT_SERVICE_PASSWORD}
       username: user
 ```
-
-在我们已经用命令`cmd startup.cmd -m standalone`启动Nacos的前提下，启动就可以看见这个Service了。
-
-![Nacos](2022-01-16-Nacos.png)
-
-
-## Config
 
 增加依赖：
 
