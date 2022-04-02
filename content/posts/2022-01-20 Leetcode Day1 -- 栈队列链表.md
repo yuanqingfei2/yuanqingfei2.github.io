@@ -1,5 +1,5 @@
 ---
-title: Leetcode -- 栈队列链表
+title: Leetcode Day1 -- 栈队列链表
 date: "2022-01-20T03:07:00.000Z"
 ---
 
@@ -40,40 +40,6 @@ class CQueue {
 ```
 时间O(1)，空间O(n)
 
-## Fabnacci数列
-
-```java
-class Solution {
-    public int fib(int n) {
-        if(n == 0) return 0;
-        else if(n == 1) return 1;
-        else {
-            int result = fib(n-2)+fib(n-1);
-            return result % 1000000007;
-        }
-    }
-}
-```
-递归的方式效率不行，不能通过所有测试（小丑竟是我自己！）
-
-动态数组法。 空间O(1)，时间O(n)
-```java
-class Solution {
-    public int fib(int n) {
-        final int MOD = 1000000007;
-        if (n < 2) {
-            return n;
-        }
-        int p = 0, q = 0, r = 1;
-        for (int i = 2; i <= n; ++i) {
-            p = q; 
-            q = r; 
-            r = (p + q) % MOD;
-        }
-        return r;
-    }
-}
-```
 
 ## 时间O(1)的min函数的栈
 
