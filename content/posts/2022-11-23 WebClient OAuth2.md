@@ -5,7 +5,7 @@ description: "最近项目中的一个有价值的东西"
 ---
 
 项目中，需要调用远程的Rest服务，而且必须通过OAuth2验证，这个过程经历三个演变，一开始就最原始的拿到Token再调用，这种方式最大的缺点是一旦token失效，需要重新拿Token. 
-到后来的用RestTemplate, 这种方式的缺点是需要使用一个很丑陋的Interceptor，最后使用WebClient, 代码比较简洁. 先把最后WebClient代码发一下
+到后来的用RestTemplate, 这种方式的缺点是需要使用一个很丑陋的Interceptor，最后使用WebClient, 代码比较简洁. 先把最后WebClient代码发一下.
 
 ```java
 public class IsgCloudRestUtil {
