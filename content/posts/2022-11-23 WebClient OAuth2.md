@@ -82,6 +82,14 @@ public class IsgCloudRestUtil {
 		}
 		return webClient;
 	}
+
+    private static KeyStore createKeyStore(final String keyStoreLocation, final String keyStorePassword) 
+    		throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException {
+        FileInputStream fis = new FileInputStream(keyStoreLocation);
+        final KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+        ks.load(fis, keyStorePassword.toCharArray());
+        return ks;
+    }
 	
     private ClientRegistration isgCloudOauthClientRegistration() {
         String authTokenEndpoint = UriComponentsBuilder.newInstance()
