@@ -61,9 +61,20 @@ public class IsgCloudRestUtil {
 		if (webClient == null) {
 			ServletOAuth2AuthorizedClientExchangeFilterFunction filter;
 			try {
+				final KeyStore trustStore = createKeyStore(jksFileName, jksPassword);
+				final TrustManagerFactory trustManager = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+	            trustManager.init(trustStore);
+				final SslContext sslContext = SslContextBuilder.forClient().trustManager(trustManager).build();
+				final HttpClient httpClient = HttpClient.create().secure(ssl -> {
+	                ssl.sslContext(sslContext);
+	            });
+				
 				filter = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
 						isgCloudOauthAuthorizedClientManager(isgCloudOauthClientRegistration()));
-				webClient = WebClient.builder().apply(filter.oauth2Configuration()).build();
+				webClient = WebClient.builder()
+						.clientConnector(new ReactorClientHttpConnector(httpClient))
+						.apply(filter.oauth2Configuration())
+						.build();
 			} catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException | CertificateException | IOException e) {
 				e.printStackTrace();
 				logger.error("failed to get web client", e);
@@ -111,3 +122,5 @@ public class IsgCloudRestUtil {
 免去了手工注入的麻烦。
 
 这段代码还有个一个值得一说的功能：调用分页服务，本质上就是通过`expand`方法来递归调用，最后把结果一起发给调用者。
+
+最后一个就是通过Web Client的`clientConnector`使得它具备了可以具备SSL的功能。
