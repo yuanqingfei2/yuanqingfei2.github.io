@@ -1,7 +1,6 @@
 ---
-title: Spirng Cloud Balancer找问题记录
+title: Spring Cloud Balancer找问题记录
 date: "2025-12-20T09:34:00.000Z"
-description: "最近项目中的一个有价值的东西"
 ---
 
 项目中，使用的是比较老的东西，主要是spring cloud 2021.0.8，以及对应的Ali Cloud 2021.0.5.0。最近在setup Cloud Gateway的时候，loadbalancer死活不工作，我一直使用DeekSeek来解决问题，这次它却无法给我正确提示了，我试了试google，它两次就告诉了我正确的原有，让我刮目相看。这个简单的问题花了我整整5个小时，所以记下来给后人参考。
