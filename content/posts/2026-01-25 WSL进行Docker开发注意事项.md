@@ -1,7 +1,6 @@
 ---
 title: WSL进行Docker开发一个注意事项
-date: "2025-12-20T09:34:00.000Z"
-description: "最近项目中的一个有价值的东西"
+date: "2026-01-25T20:56:00.000Z"
 ---
 
 Windows11自带的WSL2系统就是个Ubuntu,在上面跑Docker,在windows里面的IDEA进行开发，本来配合得挺好的，可是后来发现无论是数据库还是ActiveMQ都经常中断，而且不是因为忙中断(`HikariCP - Failed to validate connection (No operations allowed after connection closed.)`)，是系统一起来就中断，一开始疯狂调Hikari各种参数，结果都不管用。多种情况都表明这个事情是WSL引起来的，目前WSL的配置（.wslconfig）如下：
