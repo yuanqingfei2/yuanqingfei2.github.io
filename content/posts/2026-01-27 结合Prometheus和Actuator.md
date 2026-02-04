@@ -53,6 +53,7 @@ scrape_configs:
       - targets: ['core:8083']
 
 ```
+
 alert.rules.yml
 ```yml
 groups:
@@ -70,6 +71,8 @@ groups:
 
 ## Prometheus UI
 一旦启动成功后，就可以在[Prometheus UI](http://localhost:9090/)看到（Status -> Targets）运行状态
+
+![Prometheus](2026-01-27-Prometheus.png)
 
 ## 增加Grafana
 如果你有好多微服务，自身UI就不太够了，需要连上Grafana来呈现所有微服务的启停状态
