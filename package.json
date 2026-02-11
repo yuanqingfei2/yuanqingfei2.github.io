@@ -16,7 +16,6 @@
     "gatsby-plugin-google-adsense": "^1.1.3",
     "gatsby-plugin-google-analytics": "^3.13.0",
     "gatsby-plugin-manifest": "^3.13.0",
-    "gatsby-plugin-offline": "^4.13.0",
     "gatsby-plugin-react-helmet": "^4.13.0",
     "gatsby-plugin-sharp": "^3.13.0",
     "gatsby-plugin-theme-ui": "^0.11.2",
@@ -39,7 +38,8 @@
     "typeface-merriweather": "^1.1.13",
     "typeface-montserrat": "^1.1.13",
     "typography": "^0.16.21",
-    "typography-theme-wordpress-2016": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19",
+    "cheerio": "1.0.0-rc.12"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3",
