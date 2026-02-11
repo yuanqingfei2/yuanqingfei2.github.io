@@ -10,12 +10,19 @@ module.exports = {
     },
   },
   plugins: [
+    `gatsby-plugin-image`,
     {
-      resolve: `gatsby-theme-blog`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        // basePath defaults to `/`
-        basePath: `/`,
-        prismPreset: `prism-okaidia`,
+        name: `images`,
+        path: `${__dirname}/content/assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/content/posts`,
       },
     },
     {
