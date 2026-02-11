@@ -5,7 +5,7 @@
 ### Node.js 版本兼容性
 
 - **推荐版本**: Node.js 20.x (LTS)
-- **已测试版本**: Node.js v20.20.0 + Gatsby 4.25.0
+- **已测试版本**: Node.js v20.20.0 + Gatsby 5.16.1 + React 18.2.0
 
 ### 构建步骤
 
@@ -35,6 +35,12 @@
    - 发布目录: `public`
 
 ### 升级历史
+
+- ✅ **2026-02-11**: 成功升级到 Node.js 20 + Gatsby 5 + React 18
+  - 移除了 `gatsby-theme-blog` 主题依赖
+  - 添加了核心插件: `gatsby-plugin-image`, `gatsby-source-filesystem`
+  - 更新了配置文件以支持新的插件架构
+  - 修复了 GraphQL 查询语法
 
 - ✅ **2026-02-11**: 成功从Node.js 16 + Gatsby 3 升级到 Node.js 20 + Gatsby 4
   - 移除了不兼容的 `gatsby-plugin-offline`
