@@ -19,6 +19,13 @@
   to = "/:splat"
   status = 200
 
+# 禁用service worker
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+
 # Headers for security and performance
 [[headers]]
   for = "/*"
