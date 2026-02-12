@@ -15,6 +15,27 @@
 
 # 重定向规则
 [[redirects]]
+  from = "https://www.yuanqingfei.com/*"
+  to = "https://yuanqingfei.com/:splat"
+  status = 301
+
+[[redirects]]
+  from = "http://www.yuanqingfei.com/*"
+  to = "https://yuanqingfei.com/:splat"
+  status = 301
+
+[[redirects]]
+  from = "http://yuanqingfei.com/*"
+  to = "https://yuanqingfei.com/:splat"
+  status = 301
+
+# 确保根路径显示index.html
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
   from = "/forArts-blog/*"
   to = "/:splat"
   status = 200
@@ -34,6 +55,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "*.css"
