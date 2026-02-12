@@ -39,7 +39,7 @@ module.exports = {
     
               // a flag indicating whether the github default gist css should be included or not
               // default: true
-              includeDefaultCss: true
+              includeDefaultCss: false
             }
           },
           {
