@@ -58,3 +58,4 @@
 1. 使用 `npm install --legacy-peer-deps` 强制安装
 2. 检查Node.js版本: `node --version`
 3. 清理缓存: `rm -rf node_modules package-lock.json && npm install`
+
