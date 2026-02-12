@@ -4,12 +4,12 @@
 
 ### Node.js 版本兼容性
 
-- **推荐版本**: Node.js 20.x (LTS)
-- **已测试版本**: Node.js v20.20.0 + Gatsby 5.16.1 + React 18.2.0
+- **推荐版本**: Node.js 22.x (Latest)
+- **已测试版本**: Node.js v22.22.0 + Gatsby 5.16.1 + React 18.2.0
 
 ### 构建步骤
 
-1. **安装依赖** (使用Node.js 20):
+1. **安装依赖** (使用Node.js 22):
    ```bash
    npm install
    ```
@@ -35,6 +35,11 @@
    - 发布目录: `public`
 
 ### 升级历史
+
+- ✅ **2026-02-11**: 成功升级到 Node.js 22 + Gatsby 5 + React 18
+  - 升级到最新的Node.js 22.22.0版本
+  - 项目完全兼容，无需重新安装依赖
+  - 更新了部署配置以支持最新版本
 
 - ✅ **2026-02-11**: 成功升级到 Node.js 20 + Gatsby 5 + React 18
   - 移除了 `gatsby-theme-blog` 主题依赖
