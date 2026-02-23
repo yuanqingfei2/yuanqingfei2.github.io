@@ -87,4 +87,21 @@ ldconfig -p | grep tesseract
 完成这个安装后，对应版本的训练数据也安装好了，千万不要自己再手工下载，这样可能会导致版本不一致。在CentOS7上，对应的版本应该是 Tess4J 4.5.4 + Tesseract 3.04.0
 
 
+----  2026/02/23 更新 ----
+
+## 确定114版本不行，需要降级到109版本
+
+需要注意的是109版本(109.0.5414.61)的chrome太老了，google网站已经没有了，需要从这个[网站](http://dist.control.lth.se/public/CentOS-7/x86_64/google.x86_64/)下载
+
+而对应的chromedriver(109.0.5414.74)可以从[这里](https://chromedriver.storage.googleapis.com/index.html?path=109.0.5414.74/)下载。
+
+下载之后安装rpm即可。其他步骤类似。
+
+```bash
+sudo yum install -y /path/to/google-chrome-stable-109.0.5414.61-1.x86_64.rpm
+```
+
+## 放弃本地识别，使用云码OCR
+
+本地识别成功率不高，为了商业应用还是决定使用第三方的OCR服务。这里选择了[云码OCR](https://www.yunmaocr.com/)
 
